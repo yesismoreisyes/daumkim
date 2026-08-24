@@ -36,8 +36,9 @@ body{
   position:fixed;
   inset:0;
   background:
-    radial-gradient(ellipse at 20% -10%, #24262c 0%, transparent 55%),
-    radial-gradient(ellipse at 90% 110%, #1a1c22 0%, transparent 60%),
+    linear-gradient(180deg, rgba(10,11,14,0.32) 0%, rgba(10,11,14,0.52) 100%),
+    radial-gradient(ellipse at 20% -10%, rgba(36,38,44,0.4) 0%, transparent 55%),
+    url('assets/desktop.jpg') center center / cover no-repeat,
     var(--charcoal);
   overflow:hidden;
 }
@@ -144,6 +145,20 @@ body{
 .glyph-mail{background:linear-gradient(160deg,#3a3d46,#25272d); border:1px solid rgba(255,255,255,0.08); color:#d8d4c8;}
 .glyph-cv{background:var(--paper); border:1px solid rgba(0,0,0,0.15); color:var(--ink); font-family:'Noto Serif KR',serif; font-weight:700; font-size:14px;}
 .glyph-ext{background:linear-gradient(160deg,#3a3d46,#25272d); border:1px solid rgba(255,255,255,0.08); color:#d8d4c8; font-size:16px;}
+.icon-glyph.img-icon{
+  background:none; border:none; padding:0;
+  filter:drop-shadow(0 3px 8px rgba(0,0,0,0.45));
+}
+.icon-glyph.img-icon img{
+  width:100%; height:100%; object-fit:contain; display:block;
+  border-radius:9px;
+}
+.dock-item.img-icon{background:none; border:none;}
+.dock-item.img-icon img{
+  width:100%; height:100%; object-fit:contain; display:block;
+  border-radius:8px;
+  filter:drop-shadow(0 2px 6px rgba(0,0,0,0.4));
+}
 
 /* ---------- WINDOWS ---------- */
 .win{
@@ -375,11 +390,11 @@ body{
 
   <div id="icons">
     <div class="icon" data-win="about">
-      <div class="icon-glyph glyph-doc">✎</div>
+      <div class="icon-glyph img-icon"><img src="assets/notes.svg" alt=""></div>
       <div class="icon-label">소개.txt</div>
     </div>
     <div class="icon" data-win="work">
-      <div class="icon-glyph glyph-folder">▦</div>
+      <div class="icon-glyph img-icon"><img src="assets/folder.svg" alt=""></div>
       <div class="icon-label">Work</div>
     </div>
   </div>
@@ -441,6 +456,18 @@ body{
     </div>
   </div>
 
+  <!-- ===== WINDOW: PHOTOS ===== -->
+  <div class="win" id="win-photos" style="width:460px; left:260px; top:160px;">
+    <div class="win-head">
+      <div class="traffic"><span class="t-close" data-act="close"></span><span class="t-min"></span><span class="t-max"></span></div>
+      <div class="win-title">Photos</div>
+    </div>
+    <div class="win-body">
+      <div class="doc-eyebrow">INSTALLATION VIEWS &amp; REFERENCE</div>
+      <div class="empty-folder">빈 폴더 — 전시 설치 전경, 작업 관련 사진을 추가해주세요</div>
+    </div>
+  </div>
+
   <!-- ===== WINDOW: CONTACT ===== -->
   <div class="win" id="win-contact" style="width:400px; left:420px; top:400px;">
     <div class="win-head">
@@ -451,9 +478,8 @@ body{
       <div class="doc-eyebrow">CONTACT</div>
       <h1 class="doc-title">문의</h1>
       <p class="doc-sub">전시 · 협업 · 커미션</p>
-      <div class="field"><span class="k">EMAIL</span><span class="v"><a href="mailto:studio@example.com" style="color:var(--ink);">studio@example.com</a></span></div>
+      <div class="field"><span class="k">EMAIL</span><span class="v"><a href="mailto:kimdaumm@gmail.com" style="color:var(--ink);">kimdaumm@gmail.com</a></span></div>
       <div class="field"><span class="k">STUDIO</span><span class="v">서울 마포구</span></div>
-      <p style="color:var(--ink-dim);font-size:12px;">※ 이메일 주소는 예시입니다 — 실제 연락처로 교체해 주세요.</p>
     </div>
   </div>
 
@@ -487,7 +513,7 @@ body{
     var it = document.createElement('div');
     it.className = 'finder-item';
     it.dataset.year = y;
-    it.innerHTML = '<div class="icon-glyph glyph-folder">▤</div><div class="icon-label">'+y+'</div>';
+    it.innerHTML = '<div class="icon-glyph img-icon"><img src="assets/folder.svg" alt=""></div><div class="icon-label">'+y+'</div>';
     yearGrid.appendChild(it);
   });
 
@@ -585,7 +611,7 @@ body{
   document.querySelectorAll('.icon').forEach(function(ic){
     ic.addEventListener('click', function(){ focusStaticWin(ic.dataset.win); });
   });
-  document.querySelectorAll('#win-about, #win-work, #win-cv, #win-contact').forEach(function(w){
+  document.querySelectorAll('#win-about, #win-work, #win-cv, #win-contact, #win-photos').forEach(function(w){
     makeDraggable(w);
     w.addEventListener('mousedown', function(){ bringToFront(w); });
     var closeBtn = w.querySelector('[data-act="close"]');
@@ -608,15 +634,16 @@ body{
   // dock: CV, Contact, Vimeo, Instagram
   var dock = document.getElementById('dock');
   var dockItems = [
-    {id:'cv', label:'CV', cls:'glyph-cv', ch:'CV', type:'win'},
-    {id:'contact', label:'Contact', cls:'glyph-mail', ch:'✉', type:'win'},
-    {id:'vimeo', label:'Vimeo', cls:'glyph-ext', ch:'▷', type:'link', href:'https://vimeo.com/USERNAME'},
-    {id:'instagram', label:'Instagram', cls:'glyph-ext', ch:'◎', type:'link', href:'https://instagram.com/USERNAME'}
+    {id:'cv', label:'CV', img:'assets/notes.svg', type:'win'},
+    {id:'contact', label:'Contact', img:'assets/mail.svg', type:'win'},
+    {id:'photos', label:'Photos', img:'assets/photos.svg', type:'win'},
+    {id:'vimeo', label:'Vimeo', img:'assets/vimeo.svg', type:'link', href:'https://vimeo.com/kimdaum'},
+    {id:'instagram', label:'Instagram', img:'assets/instagram.svg', type:'link', href:'https://www.instagram.com/daum-kim'}
   ];
   dockItems.forEach(function(d){
     var el = document.createElement(d.type === 'link' ? 'a' : 'div');
-    el.className = 'dock-item icon-glyph ' + d.cls;
-    el.innerHTML = d.ch + '<span class="dock-label">'+d.label+'</span>';
+    el.className = 'dock-item img-icon';
+    el.innerHTML = '<img src="'+d.img+'" alt=""><span class="dock-label">'+d.label+'</span>';
     el.dataset.win = d.id;
     if(d.type === 'link'){
       el.href = d.href;
