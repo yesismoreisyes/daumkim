@@ -42,21 +42,6 @@ body{
     var(--charcoal);
   overflow:hidden;
 }
-#desktop::before{
-  content:"유리된 것들의 가청화 · THE AUDIBILIZATION OF THE UNMOORED · 유리된 것들의 가청화 · THE AUDIBILIZATION OF THE UNMOORED";
-  position:absolute;
-  left:50%; top:58%;
-  transform:translate(-50%,-50%) rotate(-11deg);
-  width:220%;
-  font-family:'Noto Serif KR',serif;
-  font-size:15vw;
-  line-height:1;
-  letter-spacing:0.02em;
-  color:rgba(255,255,255,0.025);
-  white-space:pre;
-  pointer-events:none;
-  user-select:none;
-}
 #desktop::after{
   content:"";
   position:absolute; inset:0;
@@ -536,7 +521,14 @@ body{
   // images per year — same idea, separate object so a year can have
   // photos even with no text entries yet.
   // e.g. 2026: [{src:'assets/work/2026/install-01.jpg', caption:'VIDI 설치 전경'}]
-  var workImages = {};
+  var workImages = {
+    2024: [
+      {src:'assets/work/2024/measure-carbon-rings-and-oxygen.jpg', caption:'Measure — Carbon rings and oxygen'},
+      {src:'assets/work/2024/measure-carbon-rings-and-oxygen-detail.jpg', caption:'Measure — Carbon rings and oxygen (detail)'},
+      {src:'assets/work/2024/measure-gentle-balm.jpg', caption:'Measure — Gentle balm'},
+      {src:'assets/work/2024/measure-gentle-balm-detail.jpg', caption:'Measure — Gentle balm (detail)'}
+    ]
+  };
 
   var yearGrid = document.getElementById('year-grid');
   years.forEach(function(y){
@@ -681,7 +673,7 @@ body{
     {id:'contact', label:'Contact', img:'assets/Mail_icon.svg', type:'win'},
     {id:'photos', label:'Photos', img:'assets/Photos_icon.svg', type:'win'},
     {id:'vimeo', label:'Vimeo', img:'assets/vimeo_tile.svg', type:'link', href:'https://vimeo.com/kimdaum'},
-    {id:'instagram', label:'Instagram', img:'assets/Instagram_icon.svg', type:'link', href:'https://www.instagram.com/daum_kim'}
+    {id:'instagram', label:'Instagram', img:'assets/Instagram_icon.svg', type:'link', href:'https://www.instagram.com/daum-kim'}
   ];
   dockItems.forEach(function(d){
     var el = document.createElement(d.type === 'link' ? 'a' : 'div');
