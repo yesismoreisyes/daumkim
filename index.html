@@ -11,15 +11,15 @@
 :root{
   --charcoal:#15161a;
   --charcoal-2:#1c1d22;
-  --paper:#ece5d4;
-  --paper-2:#e2dabf;
-  --ink:#1f1c17;
-  --ink-dim:#6b6558;
-  --gold:#b8935a;
-  --gold-dim:#8f7148;
-  --stamp:#9b3a2e;
+  --paper:#1e1e1e;
+  --paper-2:#252525;
+  --ink:#dcdcdc;
+  --ink-dim:#8a8a8a;
+  --gold:#f1bb4a;
+  --gold-dim:#c99a44;
+  --stamp:#e0574a;
   --teal:#4c7a73;
-  --hairline:rgba(31,28,23,0.16);
+  --hairline:rgba(255,255,255,0.12);
   --menubar-h:32px;
 }
 *{box-sizing:border-box;}
@@ -89,11 +89,11 @@ body{
 #menubar .menu-item{color:#9b968a; cursor:default;}
 #menubar .menu-item:hover{color:#f1ece0;}
 #menubar .right{display:flex;align-items:center;gap:16px;}
-#menubar .rec{display:flex;align-items:center;gap:6px;color:#c9847a;letter-spacing:0.06em;}
+#menubar .rec{display:flex;align-items:center;gap:6px;color:#ff0000;letter-spacing:0.06em;}
 #menubar .rec .dot{
   width:6px;height:6px;border-radius:50%;
-  background:var(--stamp);
-  box-shadow:0 0 6px var(--stamp);
+  background:#ff0000;
+  box-shadow:0 0 6px #ff0000;
   animation:blink 2.4s infinite;
 }
 @keyframes blink{0%,100%{opacity:1;}50%{opacity:0.25;}}
@@ -175,7 +175,7 @@ body{
 .win.open{display:flex;}
 .win-head{
   height:34px;
-  background:linear-gradient(180deg,#f2ecdd,#e6dfc9);
+  background:linear-gradient(180deg,#242424,#1c1c1c);
   border-bottom:1px solid var(--hairline);
   display:flex; align-items:center;
   padding:0 12px;
@@ -186,9 +186,9 @@ body{
 .win-head:active{cursor:grabbing;}
 .traffic{display:flex;gap:7px;}
 .traffic span{width:11px;height:11px;border-radius:50%;display:inline-block;border:1px solid rgba(0,0,0,0.15);}
-.t-close{background:var(--stamp); cursor:pointer;}
-.t-min{background:var(--gold);}
-.t-max{background:var(--teal);}
+.t-close{background:#ff0000; cursor:pointer;}
+.t-min{background:#ffff00;}
+.t-max{background:#00ff00;}
 .win-title{
   flex:1; text-align:center;
   font-family:'IBM Plex Mono',monospace;
@@ -203,7 +203,7 @@ body{
   line-height:1.85;
 }
 .win-body::-webkit-scrollbar{width:8px;}
-.win-body::-webkit-scrollbar-thumb{background:rgba(31,28,23,0.18);border-radius:4px;}
+.win-body::-webkit-scrollbar-thumb{background:rgba(255,255,255,0.14);border-radius:4px;}
 
 .doc-eyebrow{
   font-family:'IBM Plex Mono',monospace;
@@ -399,13 +399,13 @@ body{
 
   <div id="menubar">
     <div class="left">
-      <span class="brand">DK ◆ 김다움</span>
+      <span class="brand">Daum Kim ◆ 김다움</span>
       <span class="menu-item">파일</span>
       <span class="menu-item">보기</span>
       <span class="menu-item">창</span>
     </div>
     <div class="right">
-      <span class="rec"><span class="dot"></span>AMBISONICS REC</span>
+      <span class="rec"><span class="dot"></span>LIVE</span>
       <span class="clock" id="clock">--:--</span>
     </div>
   </div>
@@ -500,7 +500,7 @@ body{
       <div class="doc-eyebrow">CONTACT</div>
       <h1 class="doc-title">문의</h1>
       <p class="doc-sub">전시 · 협업 · 커미션</p>
-      <div class="field"><span class="k">EMAIL</span><span class="v"><a href="mailto:kimdaumm@gmail.com" style="color:var(--ink);">kimdaumm@gmail.com</a></span></div>
+      <div class="field"><span class="k">EMAIL</span><span class="v"><a href="mailto:kimdaumm@gmail.com" style="color:var(--gold);">kimdaumm@gmail.com</a></span></div>
       <div class="field"><span class="k">STUDIO</span><span class="v">서울 마포구</span></div>
     </div>
   </div>
