@@ -1,0 +1,645 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<title>김다움 DK — 유리된 것들의 가청화</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;500;700&family=Noto+Sans+KR:wght@300;400;500;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --charcoal:#15161a;
+  --charcoal-2:#1c1d22;
+  --paper:#ece5d4;
+  --paper-2:#e2dabf;
+  --ink:#1f1c17;
+  --ink-dim:#6b6558;
+  --gold:#b8935a;
+  --gold-dim:#8f7148;
+  --stamp:#9b3a2e;
+  --teal:#4c7a73;
+  --hairline:rgba(31,28,23,0.16);
+  --menubar-h:32px;
+}
+*{box-sizing:border-box;}
+html,body{margin:0;padding:0;height:100%;}
+body{
+  font-family:'Noto Sans KR',sans-serif;
+  color:var(--ink);
+  overflow:hidden;
+  -webkit-font-smoothing:antialiased;
+}
+
+/* ---------- DESKTOP ---------- */
+#desktop{
+  position:fixed;
+  inset:0;
+  background:
+    radial-gradient(ellipse at 20% -10%, #24262c 0%, transparent 55%),
+    radial-gradient(ellipse at 90% 110%, #1a1c22 0%, transparent 60%),
+    var(--charcoal);
+  overflow:hidden;
+}
+#desktop::before{
+  content:"유리된 것들의 가청화 · THE AUDIBILIZATION OF THE UNMOORED · 유리된 것들의 가청화 · THE AUDIBILIZATION OF THE UNMOORED";
+  position:absolute;
+  left:50%; top:58%;
+  transform:translate(-50%,-50%) rotate(-11deg);
+  width:220%;
+  font-family:'Noto Serif KR',serif;
+  font-size:15vw;
+  line-height:1;
+  letter-spacing:0.02em;
+  color:rgba(255,255,255,0.025);
+  white-space:pre;
+  pointer-events:none;
+  user-select:none;
+}
+#desktop::after{
+  content:"";
+  position:absolute; inset:0;
+  background-image:repeating-linear-gradient(180deg, rgba(255,255,255,0.012) 0px, rgba(255,255,255,0.012) 1px, transparent 1px, transparent 3px);
+  pointer-events:none;
+}
+
+/* ---------- MENU BAR ---------- */
+#menubar{
+  position:fixed; top:0; left:0; right:0; height:var(--menubar-h);
+  background:rgba(21,22,26,0.86);
+  backdrop-filter:blur(14px);
+  border-bottom:1px solid rgba(255,255,255,0.07);
+  display:flex; align-items:center; justify-content:space-between;
+  padding:0 14px;
+  font-family:'IBM Plex Mono',monospace;
+  font-size:12px;
+  color:#d8d4c8;
+  z-index:5000;
+  user-select:none;
+}
+#menubar .left{display:flex;align-items:center;gap:18px;}
+#menubar .brand{
+  font-family:'Noto Serif KR',serif;
+  font-weight:700;
+  font-size:13px;
+  letter-spacing:0.02em;
+  color:#f1ece0;
+}
+#menubar .menu-item{color:#9b968a; cursor:default;}
+#menubar .menu-item:hover{color:#f1ece0;}
+#menubar .right{display:flex;align-items:center;gap:16px;}
+#menubar .rec{display:flex;align-items:center;gap:6px;color:#c9847a;letter-spacing:0.06em;}
+#menubar .rec .dot{
+  width:6px;height:6px;border-radius:50%;
+  background:var(--stamp);
+  box-shadow:0 0 6px var(--stamp);
+  animation:blink 2.4s infinite;
+}
+@keyframes blink{0%,100%{opacity:1;}50%{opacity:0.25;}}
+#menubar .clock{color:#d8d4c8; letter-spacing:0.02em;}
+
+/* ---------- DESKTOP ICONS ---------- */
+#icons{
+  position:absolute;
+  top:calc(var(--menubar-h) + 28px);
+  left:24px;
+  display:grid;
+  grid-template-columns:84px;
+  grid-auto-rows:92px;
+  gap:6px;
+  z-index:10;
+}
+.icon{
+  width:84px;
+  display:flex; flex-direction:column; align-items:center; gap:6px;
+  cursor:pointer;
+  padding:6px 4px;
+  border-radius:6px;
+  user-select:none;
+  -webkit-tap-highlight-color:transparent;
+}
+.icon:hover .icon-glyph, .icon:active .icon-glyph{filter:brightness(1.12);}
+.icon:hover .icon-label{background:rgba(76,122,115,0.35);}
+.icon-glyph{
+  width:46px;height:46px;
+  border-radius:8px;
+  display:flex;align-items:center;justify-content:center;
+  font-size:20px;
+  flex:0 0 auto;
+}
+.icon-label{
+  font-family:'IBM Plex Mono',monospace;
+  font-size:10.5px;
+  color:#e7e3d6;
+  text-align:center;
+  line-height:1.35;
+  padding:1px 5px;
+  border-radius:3px;
+  text-shadow:0 1px 2px rgba(0,0,0,0.6);
+}
+.glyph-folder{background:linear-gradient(160deg,#3a3d46,#25272d); border:1px solid rgba(255,255,255,0.08); color:var(--gold);}
+.glyph-doc{background:var(--paper); border:1px solid rgba(0,0,0,0.15); color:var(--ink);}
+.glyph-stamp{background:linear-gradient(160deg,#2c2320,#1c1614); border:1px solid rgba(155,58,46,0.5); color:var(--stamp);}
+.glyph-term{background:#0e0f0d; border:1px solid rgba(76,122,115,0.5); color:#7fd4c4; font-family:'IBM Plex Mono',monospace; font-size:14px;}
+.glyph-mail{background:linear-gradient(160deg,#3a3d46,#25272d); border:1px solid rgba(255,255,255,0.08); color:#d8d4c8;}
+.glyph-cv{background:var(--paper); border:1px solid rgba(0,0,0,0.15); color:var(--ink); font-family:'Noto Serif KR',serif; font-weight:700; font-size:14px;}
+.glyph-ext{background:linear-gradient(160deg,#3a3d46,#25272d); border:1px solid rgba(255,255,255,0.08); color:#d8d4c8; font-size:16px;}
+
+/* ---------- WINDOWS ---------- */
+.win{
+  position:absolute;
+  min-width:300px;
+  background:var(--paper);
+  border-radius:9px;
+  box-shadow:0 30px 60px -15px rgba(0,0,0,0.55), 0 0 0 1px rgba(0,0,0,0.25);
+  display:none;
+  flex-direction:column;
+  overflow:hidden;
+  z-index:100;
+}
+.win.open{display:flex;}
+.win-head{
+  height:34px;
+  background:linear-gradient(180deg,#f2ecdd,#e6dfc9);
+  border-bottom:1px solid var(--hairline);
+  display:flex; align-items:center;
+  padding:0 12px;
+  cursor:grab;
+  user-select:none;
+  gap:10px;
+}
+.win-head:active{cursor:grabbing;}
+.traffic{display:flex;gap:7px;}
+.traffic span{width:11px;height:11px;border-radius:50%;display:inline-block;border:1px solid rgba(0,0,0,0.15);}
+.t-close{background:var(--stamp); cursor:pointer;}
+.t-min{background:var(--gold);}
+.t-max{background:var(--teal);}
+.win-title{
+  flex:1; text-align:center;
+  font-family:'IBM Plex Mono',monospace;
+  font-size:11.5px;
+  letter-spacing:0.04em;
+  color:var(--ink-dim);
+}
+.win-body{
+  padding:26px 30px 30px;
+  overflow-y:auto;
+  font-size:13.5px;
+  line-height:1.85;
+}
+.win-body::-webkit-scrollbar{width:8px;}
+.win-body::-webkit-scrollbar-thumb{background:rgba(31,28,23,0.18);border-radius:4px;}
+
+.doc-eyebrow{
+  font-family:'IBM Plex Mono',monospace;
+  font-size:10.5px;
+  letter-spacing:0.12em;
+  color:var(--ink-dim);
+  margin-bottom:6px;
+}
+.doc-title{
+  font-family:'Noto Serif KR',serif;
+  font-weight:700;
+  font-size:23px;
+  margin:0 0 4px;
+  color:var(--ink);
+}
+.doc-sub{
+  font-family:'Noto Serif KR',serif;
+  font-size:13px;
+  color:var(--ink-dim);
+  margin:0 0 20px;
+  font-style:italic;
+}
+.hr{border:0;border-top:1px solid var(--hairline); margin:18px 0;}
+.tag-row{display:flex; flex-wrap:wrap; gap:6px; margin:14px 0 4px;}
+.tag{
+  font-family:'IBM Plex Mono',monospace;
+  font-size:10.5px;
+  padding:3px 8px;
+  border:1px solid var(--hairline);
+  border-radius:20px;
+  color:var(--ink-dim);
+}
+.field{margin-bottom:14px;}
+.field .k{
+  font-family:'IBM Plex Mono',monospace;
+  font-size:10px;
+  letter-spacing:0.08em;
+  color:var(--gold-dim);
+  display:block;
+  margin-bottom:2px;
+}
+.field .v{font-size:13.5px;}
+
+.win.stamped .win-body{position:relative;}
+.win.stamped .win-body::after{
+  content:"대외비 · CONFIDENTIAL";
+  position:absolute;
+  top:14px; right:-30px;
+  transform:rotate(28deg);
+  font-family:'IBM Plex Mono',monospace;
+  font-size:11px;
+  letter-spacing:0.08em;
+  color:var(--stamp);
+  border:1.5px solid var(--stamp);
+  padding:3px 34px;
+  opacity:0.75;
+  pointer-events:none;
+}
+
+.win.term{background:#101210;}
+.win.term .win-head{background:linear-gradient(180deg,#181a17,#101210); border-bottom:1px solid rgba(127,212,196,0.2);}
+.win.term .win-title{color:#7fd4c4;}
+.win.term .win-body{
+  background:#0e100e;
+  color:#c9f0e2;
+  font-family:'IBM Plex Mono',monospace;
+  font-size:12.5px;
+  line-height:2;
+}
+.term-line{white-space:pre-wrap;}
+.term-prompt{color:#7fd4c4;}
+.term-comment{color:#5c7a70;}
+
+/* ---------- FINDER-STYLE FOLDER WINDOWS ---------- */
+.finder-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill, 82px);
+  gap:14px 10px;
+  padding:6px 2px 4px;
+}
+.finder-item{
+  display:flex; flex-direction:column; align-items:center; gap:6px;
+  cursor:pointer;
+  padding:6px 2px;
+  border-radius:6px;
+}
+.finder-item:hover{background:rgba(76,122,115,0.14);}
+.finder-item .icon-glyph{width:44px;height:44px;font-size:18px;}
+.finder-item .icon-label{
+  font-family:'IBM Plex Mono',monospace;
+  font-size:10.5px;
+  color:var(--ink);
+  text-shadow:none;
+  background:transparent !important;
+}
+
+.work-entry{margin-bottom:22px; padding-bottom:20px; border-bottom:1px solid var(--hairline);}
+.work-entry:last-child{border-bottom:none; margin-bottom:0; padding-bottom:0;}
+.work-entry .doc-eyebrow{margin-bottom:4px;}
+.work-entry h2{
+  font-family:'Noto Serif KR',serif; font-size:17px; margin:0 0 3px; color:var(--ink);
+}
+.work-entry .doc-sub{margin-bottom:10px;}
+.empty-folder{
+  padding:40px 10px;
+  text-align:center;
+  color:var(--ink-dim);
+  font-family:'IBM Plex Mono',monospace;
+  font-size:12px;
+  font-style:italic;
+}
+
+/* ---------- DOCK ---------- */
+#dock{
+  position:fixed; left:50%; bottom:14px; transform:translateX(-50%);
+  height:56px;
+  padding:0 14px;
+  display:flex; align-items:center; gap:12px;
+  background:rgba(28,29,34,0.55);
+  backdrop-filter:blur(18px);
+  border:1px solid rgba(255,255,255,0.08);
+  border-radius:16px;
+  z-index:6000;
+  max-width:92vw;
+  overflow-x:auto;
+}
+.dock-item{
+  width:40px;height:40px;flex:0 0 auto;
+  border-radius:9px;
+  display:flex;align-items:center;justify-content:center;
+  cursor:pointer;
+  transition:transform 0.12s ease;
+  font-size:15px;
+  position:relative;
+  text-decoration:none;
+}
+.dock-item:hover{transform:translateY(-6px) scale(1.08);}
+.dock-item::after{
+  content:"";
+  position:absolute; bottom:-7px; left:50%; transform:translateX(-50%);
+  width:4px;height:4px;border-radius:50%;
+  background:var(--teal);
+  opacity:0;
+}
+.dock-item.active::after{opacity:1;}
+.dock-label{
+  position:absolute; top:-24px; left:50%; transform:translateX(-50%);
+  background:rgba(21,22,26,0.9); color:#f1ece0;
+  font-family:'IBM Plex Mono',monospace; font-size:10px;
+  padding:3px 7px; border-radius:5px; white-space:nowrap;
+  opacity:0; pointer-events:none; transition:opacity 0.12s ease;
+}
+.dock-item:hover .dock-label{opacity:1;}
+
+@media (max-width:720px){
+  #icons{grid-template-columns:repeat(2,72px); left:16px; gap:14px 10px;}
+  .icon{width:72px;}
+  .win{
+    left:4vw !important; right:4vw !important; top:calc(var(--menubar-h) + 10px) !important;
+    width:92vw !important; max-height:78vh;
+  }
+  .win-body{padding:20px 18px 26px;}
+  .doc-title{font-size:20px;}
+  .win.stamped .win-body::after{right:-38px; font-size:10px;}
+}
+</style>
+</head>
+<body>
+
+<div id="desktop">
+
+  <div id="menubar">
+    <div class="left">
+      <span class="brand">DK ◆ 김다움</span>
+      <span class="menu-item">파일</span>
+      <span class="menu-item">보기</span>
+      <span class="menu-item">창</span>
+    </div>
+    <div class="right">
+      <span class="rec"><span class="dot"></span>AMBISONICS REC</span>
+      <span class="clock" id="clock">--:--</span>
+    </div>
+  </div>
+
+  <div id="icons">
+    <div class="icon" data-win="about">
+      <div class="icon-glyph glyph-doc">✎</div>
+      <div class="icon-label">소개.txt</div>
+    </div>
+    <div class="icon" data-win="work">
+      <div class="icon-glyph glyph-folder">▦</div>
+      <div class="icon-label">Work</div>
+    </div>
+  </div>
+
+  <!-- ===== WINDOW: ABOUT ===== -->
+  <div class="win" id="win-about" style="width:520px; left:120px; top:70px;">
+    <div class="win-head">
+      <div class="traffic"><span class="t-close" data-act="close"></span><span class="t-min"></span><span class="t-max"></span></div>
+      <div class="win-title">소개.txt</div>
+    </div>
+    <div class="win-body">
+      <div class="doc-eyebrow">ABOUT — SEOUL, KR</div>
+      <h1 class="doc-title">김다움 Kim Daum <span style="color:var(--gold-dim);font-weight:400;">/ DK</span></h1>
+      <p class="doc-sub">유리된 것들의 가청화 — The Audibilization of the Unmoored</p>
+      <p>2013년부터 이어온 작업은 사운드 설치, 영상, 회화, 키네틱 조각을 오가며 진행된다. 공간 음향 — 앰비소닉스, 바이노럴, 다채널 — 이 실천의 핵심 매체를 이룬다.</p>
+      <p>작업의 언어는 세 가지 개념을 축으로 조직된다: <b>유리(遊離)</b>, <b>매개유대(媒介紐帶)</b>, <b>가청화(可聽化)</b>. 방법론적으로는 상호간접·임장감·각인이라는 개념을 경유하며, 요한 갈퉁의 구조적 폭력론, 사라 아메드의 정동 경제, 로렌 벌랜트, 주디스 버틀러, 오슬랜더·샌든의 라이브니스 이론을 이론적 좌표로 삼는다. 김성우 큐레이터의 비평 "가설된 인터페이스"는 실천을 서술하는 데 반복적으로 참조되는 텍스트다.</p>
+      <hr class="hr">
+      <div class="tag-row">
+        <span class="tag">담론형</span><span class="tag">기관형</span><span class="tag">시장친화형</span>
+      </div>
+      <p>실천은 담론형·기관형·시장친화형, 세 트랙으로 병행 운영된다.</p>
+      <div class="field">
+        <span class="k">전시 이력</span>
+        <span class="v">국립현대미술관(MMCA), 광주비엔날레, 송은 등에서 전시</span>
+      </div>
+      <div class="field">
+        <span class="k">위치</span>
+        <span class="v">서울 마포구 (망원동)</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== WINDOW: WORK (Finder root) ===== -->
+  <div class="win" id="win-work" style="width:460px; left:520px; top:100px;">
+    <div class="win-head">
+      <div class="traffic"><span class="t-close" data-act="close"></span><span class="t-min"></span><span class="t-max"></span></div>
+      <div class="win-title">Work</div>
+    </div>
+    <div class="win-body">
+      <div class="finder-grid" id="year-grid"></div>
+    </div>
+  </div>
+
+  <!-- ===== WINDOW: CV ===== -->
+  <div class="win" id="win-cv" style="width:480px; left:200px; top:130px;">
+    <div class="win-head">
+      <div class="traffic"><span class="t-close" data-act="close"></span><span class="t-min"></span><span class="t-max"></span></div>
+      <div class="win-title">CV</div>
+    </div>
+    <div class="win-body">
+      <div class="doc-eyebrow">CURRICULUM VITAE</div>
+      <h1 class="doc-title">김다움 Kim Daum / DK</h1>
+      <p class="doc-sub">b. — · Seoul, KR</p>
+      <div class="field"><span class="k">실천 시작</span><span class="v">2013 —</span></div>
+      <div class="field"><span class="k">매체</span><span class="v">사운드 설치, 영상, 회화, 키네틱 조각 — 공간 음향(앰비소닉스·바이노럴·다채널) 중심</span></div>
+      <div class="field"><span class="k">주요 전시</span><span class="v">국립현대미술관(MMCA), 광주비엔날레, 송은</span></div>
+      <hr class="hr">
+      <p style="color:var(--ink-dim); font-size:12px;">※ 학력, 전체 전시·수상 이력 등 세부 항목은 아직 비어 있습니다 — 채워야 할 내용을 알려주시면 정리해 넣을게요.</p>
+    </div>
+  </div>
+
+  <!-- ===== WINDOW: CONTACT ===== -->
+  <div class="win" id="win-contact" style="width:400px; left:420px; top:400px;">
+    <div class="win-head">
+      <div class="traffic"><span class="t-close" data-act="close"></span><span class="t-min"></span><span class="t-max"></span></div>
+      <div class="win-title">Contact</div>
+    </div>
+    <div class="win-body">
+      <div class="doc-eyebrow">CONTACT</div>
+      <h1 class="doc-title">문의</h1>
+      <p class="doc-sub">전시 · 협업 · 커미션</p>
+      <div class="field"><span class="k">EMAIL</span><span class="v"><a href="mailto:studio@example.com" style="color:var(--ink);">studio@example.com</a></span></div>
+      <div class="field"><span class="k">STUDIO</span><span class="v">서울 마포구</span></div>
+      <p style="color:var(--ink-dim);font-size:12px;">※ 이메일 주소는 예시입니다 — 실제 연락처로 교체해 주세요.</p>
+    </div>
+  </div>
+
+  <div id="dock"></div>
+
+</div>
+
+<script>
+(function(){
+  var years = [2026,2025,2024,2023,2022,2021,2020,2019,2018,2017,2016,2015,2014,2013];
+
+  // work entries by year — populated where the year is reasonably certain,
+  // left empty otherwise so nothing is guessed.
+  var workData = {
+    2026: [
+      {eyebrow:'EXHIBITION', title:'VIDI 2인전', sub:'VIDI Gallery, Myeongdong · 10월–11월',
+       body:'2인 회화전. 브로슈어 구성과 캔버스 전략을 함께 준비하고 있다.'},
+      {eyebrow:'PAINTING SERIES', title:'대외비 / Eyes Only', sub:'1997년 IMF 문서 기반',
+       body:'실크스크린과 금박, 서페이스 익사이터 사운드 설치를 결합한 회화 연작. 요제프 알베르스의 색채 상호작용 이론을 경유해 색면을 구성했으며, 탈린 아트홀 교환 레지던시 지원의 기반이 되었다.'},
+      {eyebrow:'VIDEO / SOUND', title:'혈연의 하모니', sub:'Blood Harmony · NARA RG 242',
+       body:'한국전쟁기 편지를 AI 음성 합성으로 되살리는 4막 구성 영상 작업. 일우예술상 지원을 준비하고 있다.'},
+      {eyebrow:'PAINTING SERIES', title:'마켓 페인팅 시리즈', sub:'Fault Line · Lens Drop · Twin Circle · Drip Grid · Folded Light',
+       body:'골든 아크릴을 사용한 포어링과 플랫 페인팅 기법으로 전개한 다섯 개의 연작 컨셉. 국내 컬렉터 시장을 겨냥해 정사각 S호 포맷을 기본형으로 채택했다.'},
+      {eyebrow:'INFRASTRUCTURE', title:'audio-infra', sub:'DIY 사운드 설치 시스템',
+       body:'라즈베리파이 기반 오토플레이 시스템, Max/Python DMX 브리지, 바이노럴·앰비소닉 레코딩 장비 구성.'}
+    ]
+  };
+
+  var yearGrid = document.getElementById('year-grid');
+  years.forEach(function(y){
+    var it = document.createElement('div');
+    it.className = 'finder-item';
+    it.dataset.year = y;
+    it.innerHTML = '<div class="icon-glyph glyph-folder">▤</div><div class="icon-label">'+y+'</div>';
+    yearGrid.appendChild(it);
+  });
+
+  var zTop = 200;
+  var openYearWindows = {};
+
+  function bringToFront(w){ zTop += 1; w.style.zIndex = zTop; }
+
+  function focusStaticWin(id){
+    var w = document.getElementById('win-' + id);
+    if(!w) return;
+    bringToFront(w);
+    w.classList.add('open');
+    setActiveDock(id);
+  }
+  function closeStaticWin(id){
+    var w = document.getElementById('win-' + id);
+    if(w) w.classList.remove('open');
+    setActiveDock(null, id);
+  }
+
+  function setActiveDock(activeId, removeId){
+    document.querySelectorAll('.dock-item').forEach(function(d){
+      if(activeId && d.dataset.win === activeId) d.classList.add('active');
+      if(removeId && d.dataset.win === removeId) d.classList.remove('active');
+    });
+  }
+
+  function makeDraggable(w){
+    var head = w.querySelector('.win-head');
+    var offX=0, offY=0, dragging=false;
+    function start(cx, cy){ dragging=true; var r=w.getBoundingClientRect(); offX=cx-r.left; offY=cy-r.top; bringToFront(w); }
+    function move(cx, cy){
+      if(!dragging) return;
+      var maxX = window.innerWidth - 60, maxY = window.innerHeight - 40;
+      w.style.left = Math.min(Math.max(cx-offX,-40), maxX) + 'px';
+      w.style.top = Math.min(Math.max(cy-offY,30), maxY) + 'px';
+    }
+    function end(){ dragging=false; }
+    head.addEventListener('mousedown', function(e){ start(e.clientX,e.clientY); });
+    window.addEventListener('mousemove', function(e){ move(e.clientX,e.clientY); });
+    window.addEventListener('mouseup', end);
+    head.addEventListener('touchstart', function(e){ var t=e.touches[0]; start(t.clientX,t.clientY); }, {passive:true});
+    window.addEventListener('touchmove', function(e){ var t=e.touches[0]; move(t.clientX,t.clientY); }, {passive:true});
+    window.addEventListener('touchend', end);
+  }
+
+  function openYearWindow(year){
+    if(openYearWindows[year]){
+      bringToFront(openYearWindows[year]);
+      return;
+    }
+    var w = document.createElement('div');
+    w.className = 'win open';
+    var offset = Object.keys(openYearWindows).length * 26;
+    w.style.width = '440px';
+    w.style.left = (560 + offset) + 'px';
+    w.style.top = (140 + offset) + 'px';
+
+    var entries = workData[year] || [];
+    var bodyHtml = '';
+    if(entries.length === 0){
+      bodyHtml = '<div class="empty-folder">빈 폴더 — 이 해의 작업을 알려주시면 채워 넣을게요</div>';
+    } else {
+      entries.forEach(function(e){
+        bodyHtml += '<div class="work-entry">' +
+          '<div class="doc-eyebrow">'+e.eyebrow+'</div>' +
+          '<h2>'+e.title+'</h2>' +
+          '<p class="doc-sub">'+e.sub+'</p>' +
+          '<p>'+e.body+'</p>' +
+        '</div>';
+      });
+    }
+
+    w.innerHTML =
+      '<div class="win-head">' +
+        '<div class="traffic"><span class="t-close"></span><span class="t-min"></span><span class="t-max"></span></div>' +
+        '<div class="win-title">Work / '+year+'</div>' +
+      '</div>' +
+      '<div class="win-body">'+bodyHtml+'</div>';
+
+    document.getElementById('desktop').appendChild(w);
+    bringToFront(w);
+    makeDraggable(w);
+    w.querySelector('.t-close').addEventListener('click', function(e){
+      e.stopPropagation();
+      w.remove();
+      delete openYearWindows[year];
+    });
+    w.addEventListener('mousedown', function(){ bringToFront(w); });
+    openYearWindows[year] = w;
+  }
+
+  // static window wiring
+  document.querySelectorAll('.icon').forEach(function(ic){
+    ic.addEventListener('click', function(){ focusStaticWin(ic.dataset.win); });
+  });
+  document.querySelectorAll('#win-about, #win-work, #win-cv, #win-contact').forEach(function(w){
+    makeDraggable(w);
+    w.addEventListener('mousedown', function(){ bringToFront(w); });
+    var closeBtn = w.querySelector('[data-act="close"]');
+    if(closeBtn){
+      closeBtn.addEventListener('click', function(e){
+        e.stopPropagation();
+        w.classList.remove('open');
+        var id = w.id.replace('win-','');
+        setActiveDock(null, id);
+      });
+    }
+  });
+
+  yearGrid.addEventListener('click', function(e){
+    var item = e.target.closest('.finder-item');
+    if(!item) return;
+    openYearWindow(item.dataset.year);
+  });
+
+  // dock: CV, Contact, Vimeo, Instagram
+  var dock = document.getElementById('dock');
+  var dockItems = [
+    {id:'cv', label:'CV', cls:'glyph-cv', ch:'CV', type:'win'},
+    {id:'contact', label:'Contact', cls:'glyph-mail', ch:'✉', type:'win'},
+    {id:'vimeo', label:'Vimeo', cls:'glyph-ext', ch:'▷', type:'link', href:'https://vimeo.com/USERNAME'},
+    {id:'instagram', label:'Instagram', cls:'glyph-ext', ch:'◎', type:'link', href:'https://instagram.com/USERNAME'}
+  ];
+  dockItems.forEach(function(d){
+    var el = document.createElement(d.type === 'link' ? 'a' : 'div');
+    el.className = 'dock-item icon-glyph ' + d.cls;
+    el.innerHTML = d.ch + '<span class="dock-label">'+d.label+'</span>';
+    el.dataset.win = d.id;
+    if(d.type === 'link'){
+      el.href = d.href;
+      el.target = '_blank';
+      el.rel = 'noopener';
+    } else {
+      el.addEventListener('click', function(){ focusStaticWin(d.id); });
+    }
+    dock.appendChild(el);
+  });
+
+  // open About by default
+  focusStaticWin('about');
+
+  function tick(){
+    var now = new Date();
+    var opts = { hour:'2-digit', minute:'2-digit', hour12:false, timeZone:'Asia/Seoul' };
+    document.getElementById('clock').textContent = now.toLocaleTimeString('ko-KR', opts);
+  }
+  tick();
+  setInterval(tick, 1000 * 15);
+})();
+</script>
+
+</body>
+</html>
