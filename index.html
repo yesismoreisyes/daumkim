@@ -38,7 +38,7 @@ body{
   background:
     linear-gradient(180deg, rgba(10,11,14,0.32) 0%, rgba(10,11,14,0.52) 100%),
     radial-gradient(ellipse at 20% -10%, rgba(36,38,44,0.4) 0%, transparent 55%),
-    url('assets/desktop.jpg') center center / cover no-repeat,
+    url('assets/desktop_image.jpg') center center / cover no-repeat,
     var(--charcoal);
   overflow:hidden;
 }
@@ -316,6 +316,28 @@ body{
   font-style:italic;
 }
 
+.work-gallery{
+  display:grid;
+  grid-template-columns:repeat(auto-fill, minmax(110px,1fr));
+  gap:12px;
+  margin-bottom:24px;
+}
+.work-gallery a{display:block; text-decoration:none;}
+.work-gallery img{
+  width:100%; height:92px; object-fit:cover;
+  border-radius:6px;
+  border:1px solid var(--hairline);
+  box-shadow:0 4px 10px rgba(0,0,0,0.18);
+  display:block;
+}
+.work-gallery .cap{
+  font-family:'IBM Plex Mono',monospace;
+  font-size:9.5px;
+  color:var(--ink-dim);
+  margin-top:4px;
+  line-height:1.3;
+}
+
 /* ---------- DOCK ---------- */
 #dock{
   position:fixed; left:50%; bottom:14px; transform:translateX(-50%);
@@ -390,11 +412,11 @@ body{
 
   <div id="icons">
     <div class="icon" data-win="about">
-      <div class="icon-glyph img-icon"><img src="assets/notes.svg" alt=""></div>
+      <div class="icon-glyph img-icon"><img src="assets/Notes_icon.svg" alt=""></div>
       <div class="icon-label">소개.txt</div>
     </div>
     <div class="icon" data-win="work">
-      <div class="icon-glyph img-icon"><img src="assets/folder.svg" alt=""></div>
+      <div class="icon-glyph img-icon"><img src="assets/folder_icon.svg" alt=""></div>
       <div class="icon-label">Work</div>
     </div>
   </div>
@@ -493,6 +515,9 @@ body{
 
   // work entries by year — populated where the year is reasonably certain,
   // left empty otherwise so nothing is guessed.
+  //
+  // To add photos to a year folder: put jpg files under assets/work/<year>/,
+  // then list them here as  images: [{src:'assets/work/2026/photo1.jpg', caption:'설치 전경'}, ...]
   var workData = {
     2026: [
       {eyebrow:'EXHIBITION', title:'VIDI 2인전', sub:'VIDI Gallery, Myeongdong · 10월–11월',
@@ -508,12 +533,17 @@ body{
     ]
   };
 
+  // images per year — same idea, separate object so a year can have
+  // photos even with no text entries yet.
+  // e.g. 2026: [{src:'assets/work/2026/install-01.jpg', caption:'VIDI 설치 전경'}]
+  var workImages = {};
+
   var yearGrid = document.getElementById('year-grid');
   years.forEach(function(y){
     var it = document.createElement('div');
     it.className = 'finder-item';
     it.dataset.year = y;
-    it.innerHTML = '<div class="icon-glyph img-icon"><img src="assets/folder.svg" alt=""></div><div class="icon-label">'+y+'</div>';
+    it.innerHTML = '<div class="icon-glyph img-icon"><img src="assets/folder_icon.svg" alt=""></div><div class="icon-label">'+y+'</div>';
     yearGrid.appendChild(it);
   });
 
@@ -573,9 +603,22 @@ body{
     w.style.left = (560 + offset) + 'px';
     w.style.top = (140 + offset) + 'px';
 
+    var images = workImages[year] || [];
     var entries = workData[year] || [];
     var bodyHtml = '';
-    if(entries.length === 0){
+
+    if(images.length > 0){
+      bodyHtml += '<div class="work-gallery">';
+      images.forEach(function(img){
+        bodyHtml += '<a href="'+img.src+'" target="_blank" rel="noopener">' +
+          '<img src="'+img.src+'" alt="'+(img.caption||'')+'" loading="lazy">' +
+          (img.caption ? '<div class="cap">'+img.caption+'</div>' : '') +
+        '</a>';
+      });
+      bodyHtml += '</div>';
+    }
+
+    if(entries.length === 0 && images.length === 0){
       bodyHtml = '<div class="empty-folder">빈 폴더 — 이 해의 작업을 알려주시면 채워 넣을게요</div>';
     } else {
       entries.forEach(function(e){
@@ -634,11 +677,11 @@ body{
   // dock: CV, Contact, Vimeo, Instagram
   var dock = document.getElementById('dock');
   var dockItems = [
-    {id:'cv', label:'CV', img:'assets/notes.svg', type:'win'},
-    {id:'contact', label:'Contact', img:'assets/mail.svg', type:'win'},
-    {id:'photos', label:'Photos', img:'assets/photos.svg', type:'win'},
-    {id:'vimeo', label:'Vimeo', img:'assets/vimeo.svg', type:'link', href:'https://vimeo.com/kimdaum'},
-    {id:'instagram', label:'Instagram', img:'assets/instagram.svg', type:'link', href:'https://www.instagram.com/daum-kim'}
+    {id:'cv', label:'CV', img:'assets/Notes_icon.svg', type:'win'},
+    {id:'contact', label:'Contact', img:'assets/Mail_icon.svg', type:'win'},
+    {id:'photos', label:'Photos', img:'assets/Photos_icon.svg', type:'win'},
+    {id:'vimeo', label:'Vimeo', img:'assets/vimeo_tile.svg', type:'link', href:'https://vimeo.com/kimdaum'},
+    {id:'instagram', label:'Instagram', img:'assets/Instagram_icon.svg', type:'link', href:'https://www.instagram.com/daum-kim'}
   ];
   dockItems.forEach(function(d){
     var el = document.createElement(d.type === 'link' ? 'a' : 'div');
