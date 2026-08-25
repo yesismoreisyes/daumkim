@@ -187,8 +187,16 @@ body{
   font-size:13.5px;
   line-height:1.85;
 }
-.win-body::-webkit-scrollbar{width:8px;}
-.win-body::-webkit-scrollbar-thumb{background:rgba(255,255,255,0.14);border-radius:4px;}
+.win-body::-webkit-scrollbar{width:11px;}
+.win-body::-webkit-scrollbar-track{background:rgba(255,255,255,0.05);}
+.win-body::-webkit-scrollbar-thumb{
+  background:rgba(255,255,255,0.28);
+  border-radius:6px;
+  border:2.5px solid transparent;
+  background-clip:padding-box;
+}
+.win-body::-webkit-scrollbar-thumb:hover{background:rgba(255,255,255,0.4);}
+.win-body{scrollbar-width:thin; scrollbar-color:rgba(255,255,255,0.28) rgba(255,255,255,0.05);}
 
 .doc-eyebrow{
   font-family:'IBM Plex Mono',monospace;
@@ -371,9 +379,9 @@ body{
 /* ---------- DOCK ---------- */
 #dock{
   position:fixed; left:50%; bottom:14px; transform:translateX(-50%);
-  height:56px;
-  padding:0 14px;
-  display:flex; align-items:center; gap:12px;
+  height:74px;
+  padding:0 16px;
+  display:flex; align-items:center; gap:16px;
   background:rgba(28,29,34,0.55);
   backdrop-filter:blur(18px);
   border:1px solid rgba(255,255,255,0.08);
@@ -381,6 +389,11 @@ body{
   z-index:6000;
   max-width:92vw;
   overflow-x:auto;
+  overflow-y:hidden;
+}
+.dock-item-wrap{
+  display:flex; flex-direction:column; align-items:center; gap:5px;
+  flex:0 0 auto;
 }
 .dock-item{
   width:40px;height:40px;flex:0 0 auto;
@@ -392,7 +405,7 @@ body{
   position:relative;
   text-decoration:none;
 }
-.dock-item:hover{transform:translateY(-6px) scale(1.08);}
+.dock-item-wrap:hover .dock-item{transform:translateY(-6px) scale(1.08);}
 .dock-item::after{
   content:"";
   position:absolute; bottom:-7px; left:50%; transform:translateX(-50%);
@@ -402,13 +415,11 @@ body{
 }
 .dock-item.active::after{opacity:1;}
 .dock-label{
-  position:absolute; top:-24px; left:50%; transform:translateX(-50%);
-  background:rgba(21,22,26,0.9); color:#f1ece0;
   font-family:'IBM Plex Mono',monospace; font-size:10px;
-  padding:3px 7px; border-radius:5px; white-space:nowrap;
-  opacity:0; pointer-events:none; transition:opacity 0.12s ease;
+  color:#e7e3d6;
+  text-shadow:0 1px 2px rgba(0,0,0,0.6);
+  white-space:nowrap;
 }
-.dock-item:hover .dock-label{opacity:1;}
 
 @media (max-width:720px){
   #icons{grid-template-columns:repeat(2,72px); left:16px; gap:14px 10px;}
@@ -443,7 +454,7 @@ body{
   <div id="icons">
     <div class="icon" data-win="about">
       <div class="icon-glyph img-icon"><img src="assets/Notes_icon.svg" alt=""></div>
-      <div class="icon-label">About.txt</div>
+      <div class="icon-label">About</div>
     </div>
     <div class="icon" data-win="cv-kor">
       <div class="icon-glyph img-icon"><img src="assets/Notes_icon.svg" alt=""></div>
@@ -924,18 +935,21 @@ body{
     openYearWindow(item.dataset.year);
   });
 
-  // dock: CV, Contact, Vimeo, Instagram
+  // dock: Contact, Photo, Vimeo, Instagram
   var dock = document.getElementById('dock');
   var dockItems = [
     {id:'contact', label:'Contact', img:'assets/Mail_icon.svg', type:'win'},
-    {id:'photos', label:'Photos', img:'assets/Photos_icon.svg', type:'win'},
+    {id:'photos', label:'Photo', img:'assets/Photos_icon.svg', type:'win'},
     {id:'vimeo', label:'Vimeo', img:'assets/vimeo_tile.svg', type:'link', href:'https://vimeo.com/kimdaum'},
     {id:'instagram', label:'Instagram', img:'assets/Instagram_icon.svg', type:'link', href:'https://www.instagram.com/daum-kim'}
   ];
   dockItems.forEach(function(d){
+    var wrap = document.createElement('div');
+    wrap.className = 'dock-item-wrap';
+
     var el = document.createElement(d.type === 'link' ? 'a' : 'div');
     el.className = 'dock-item img-icon';
-    el.innerHTML = '<img src="'+d.img+'" alt=""><span class="dock-label">'+d.label+'</span>';
+    el.innerHTML = '<img src="'+d.img+'" alt="">';
     el.dataset.win = d.id;
     if(d.type === 'link'){
       el.href = d.href;
@@ -944,7 +958,14 @@ body{
     } else {
       el.addEventListener('click', function(){ focusStaticWin(d.id); });
     }
-    dock.appendChild(el);
+
+    var label = document.createElement('span');
+    label.className = 'dock-label';
+    label.textContent = d.label;
+
+    wrap.appendChild(el);
+    wrap.appendChild(label);
+    dock.appendChild(wrap);
   });
 
   // open About by default
