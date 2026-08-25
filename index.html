@@ -63,16 +63,12 @@ body{
   z-index:5000;
   user-select:none;
 }
-#menubar .left{display:flex;align-items:center;gap:18px;}
-#menubar .brand{
-  font-family:'Noto Serif KR',serif;
-  font-weight:700;
-  font-size:13px;
-  letter-spacing:0.02em;
-  color:#f1ece0;
-}
-#menubar .menu-item{color:#9b968a; cursor:default;}
+#menubar .left{display:flex;align-items:center;gap:22px;}
+#menubar .logo-emoji{font-size:15px; line-height:1;}
+#menubar .menu-item{color:#9b968a; cursor:default; letter-spacing:0.03em;}
 #menubar .menu-item:hover{color:#f1ece0;}
+#menubar .menu-action{cursor:pointer;}
+#menubar .menu-action:hover{color:#f1ece0;}
 #menubar .right{display:flex;align-items:center;gap:16px;}
 #menubar .rec{display:flex;align-items:center;gap:6px;color:#ff0000;letter-spacing:0.06em;}
 #menubar .rec .dot{
@@ -88,7 +84,7 @@ body{
 #icons{
   position:absolute;
   top:calc(var(--menubar-h) + 28px);
-  left:24px;
+  right:24px;
   display:grid;
   grid-template-columns:84px;
   grid-auto-rows:92px;
@@ -422,7 +418,7 @@ body{
 }
 
 @media (max-width:720px){
-  #icons{grid-template-columns:repeat(2,72px); left:16px; gap:14px 10px;}
+  #icons{grid-template-columns:repeat(2,72px); right:16px; gap:14px 10px;}
   .icon{width:72px;}
   .win{
     left:4vw !important; right:4vw !important; top:calc(var(--menubar-h) + 10px) !important;
@@ -440,10 +436,9 @@ body{
 
   <div id="menubar">
     <div class="left">
-      <span class="brand">Daum Kim ◆ 김다움</span>
-      <span class="menu-item">파일</span>
-      <span class="menu-item">보기</span>
-      <span class="menu-item">창</span>
+      <span class="logo-emoji">💿</span>
+      <span class="menu-item menu-action" id="menu-about">About</span>
+      <span class="menu-item menu-action" id="menu-cv">CV</span>
     </div>
     <div class="right">
       <span class="rec"><span class="dot"></span>LIVE</span>
@@ -452,18 +447,6 @@ body{
   </div>
 
   <div id="icons">
-    <div class="icon" data-win="about">
-      <div class="icon-glyph img-icon"><img src="assets/Notes_icon.svg" alt=""></div>
-      <div class="icon-label">About</div>
-    </div>
-    <div class="icon" data-win="cv-kor">
-      <div class="icon-glyph img-icon"><img src="assets/Notes_icon.svg" alt=""></div>
-      <div class="icon-label">CV_Kor</div>
-    </div>
-    <div class="icon" data-win="cv-eng">
-      <div class="icon-glyph img-icon"><img src="assets/Notes_icon.svg" alt=""></div>
-      <div class="icon-label">CV_ENG</div>
-    </div>
     <div class="icon" data-win="work">
       <div class="icon-glyph img-icon"><img src="assets/folder_icon.svg" alt=""></div>
       <div class="icon-label">Work</div>
@@ -914,6 +897,17 @@ body{
   // static window wiring
   document.querySelectorAll('.icon').forEach(function(ic){
     ic.addEventListener('click', function(){ focusStaticWin(ic.dataset.win); });
+  });
+  document.getElementById('menu-about').addEventListener('click', function(){
+    focusStaticWin('about');
+  });
+  document.getElementById('menu-cv').addEventListener('click', function(){
+    var k = document.getElementById('win-cv-kor');
+    var e = document.getElementById('win-cv-eng');
+    k.style.left = '60px'; k.style.top = '60px';
+    e.style.left = '650px'; e.style.top = '60px';
+    focusStaticWin('cv-kor');
+    focusStaticWin('cv-eng');
   });
   document.querySelectorAll('#win-about, #win-work, #win-cv-kor, #win-cv-eng, #win-contact, #win-photos').forEach(function(w){
     makeDraggable(w);
