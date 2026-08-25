@@ -211,6 +211,20 @@ body{
   margin:0 0 20px;
   font-style:italic;
 }
+.cv-section{margin:22px 0;}
+.cv-section:first-child{margin-top:0;}
+.cv-section h3{
+  font-family:'Noto Serif KR',serif; font-size:14px; font-weight:700;
+  color:var(--gold); margin:0 0 10px; letter-spacing:0.02em;
+}
+.cv-item{display:flex; gap:10px; font-size:12.5px; line-height:1.65; margin:0 0 4px;}
+.cv-item .yr{flex:0 0 40px; font-family:'IBM Plex Mono',monospace; color:var(--ink-dim); font-size:11px; padding-top:2px;}
+.cv-item .desc{flex:1;}
+.cv-lang-label{
+  font-family:'IBM Plex Mono',monospace; font-size:10.5px; letter-spacing:0.15em;
+  color:var(--ink-dim); margin:0 0 16px;
+}
+.cv-divider{margin:34px 0 26px; border:0; border-top:1px solid var(--hairline);}
 .hr{border:0;border-top:1px solid var(--hairline); margin:18px 0;}
 .tag-row{display:flex; flex-wrap:wrap; gap:6px; margin:14px 0 4px;}
 .tag{
@@ -398,7 +412,15 @@ body{
   <div id="icons">
     <div class="icon" data-win="about">
       <div class="icon-glyph img-icon"><img src="assets/Notes_icon.svg" alt=""></div>
-      <div class="icon-label">소개.txt</div>
+      <div class="icon-label">About.txt</div>
+    </div>
+    <div class="icon" data-win="cv-kor">
+      <div class="icon-glyph img-icon"><img src="assets/Notes_icon.svg" alt=""></div>
+      <div class="icon-label">CV_Kor</div>
+    </div>
+    <div class="icon" data-win="cv-eng">
+      <div class="icon-glyph img-icon"><img src="assets/Notes_icon.svg" alt=""></div>
+      <div class="icon-label">CV_ENG</div>
     </div>
     <div class="icon" data-win="work">
       <div class="icon-glyph img-icon"><img src="assets/folder_icon.svg" alt=""></div>
@@ -410,7 +432,7 @@ body{
   <div class="win" id="win-about" style="width:520px; left:120px; top:70px;">
     <div class="win-head">
       <div class="traffic"><span class="t-close" data-act="close"></span><span class="t-min"></span><span class="t-max"></span></div>
-      <div class="win-title">소개.txt</div>
+      <div class="win-title">About.txt</div>
     </div>
     <div class="win-body">
       <div class="doc-eyebrow">ABOUT — SEOUL, KR</div>
@@ -446,20 +468,192 @@ body{
   </div>
 
   <!-- ===== WINDOW: CV ===== -->
-  <div class="win" id="win-cv" style="width:480px; left:200px; top:130px;">
+  <div class="win" id="win-cv-kor" style="width:560px; left:200px; top:80px;">
     <div class="win-head">
       <div class="traffic"><span class="t-close" data-act="close"></span><span class="t-min"></span><span class="t-max"></span></div>
-      <div class="win-title">CV</div>
+      <div class="win-title">CV_Kor</div>
     </div>
     <div class="win-body">
       <div class="doc-eyebrow">CURRICULUM VITAE</div>
-      <h1 class="doc-title">김다움 Kim Daum / DK</h1>
-      <p class="doc-sub">b. — · Seoul, KR</p>
-      <div class="field"><span class="k">실천 시작</span><span class="v">2013 —</span></div>
-      <div class="field"><span class="k">매체</span><span class="v">사운드 설치, 영상, 회화, 키네틱 조각 — 공간 음향(앰비소닉스·바이노럴·다채널) 중심</span></div>
-      <div class="field"><span class="k">주요 전시</span><span class="v">국립현대미술관(MMCA), 광주비엔날레, 송은</span></div>
-      <hr class="hr">
-      <p style="color:var(--ink-dim); font-size:12px;">※ 학력, 전체 전시·수상 이력 등 세부 항목은 아직 비어 있습니다 — 채워야 할 내용을 알려주시면 정리해 넣을게요.</p>
+      <h1 class="doc-title">김다움 Kim Daum</h1>
+      <p class="doc-sub">Seoul, KR</p>
+
+      <div class="cv-section">
+        <h3>개인전</h3>
+        <p class="cv-item"><span class="yr">2024</span><span class="desc">《흩어지는 차가움 마르는 빛》, 갤러리 세이프, 서울</span></p>
+        <p class="cv-item"><span class="yr">2023</span><span class="desc">《dazzled &amp; muddled》, 프라이머리 프랙티스, 서울</span></p>
+        <p class="cv-item"><span class="yr">2019</span><span class="desc">《눈먼 길》, 팩토리2, 서울</span></p>
+        <p class="cv-item"><span class="yr">2015</span><span class="desc">《대나무숲 옆에서》, 스페이스 윌링앤딜링, 서울</span></p>
+        <p class="cv-item"><span class="yr">2014</span><span class="desc">《RSVP》, 아트선재 라운지 프로젝트, 아트선재센터, 서울</span></p>
+      </div>
+
+      <div class="cv-section">
+        <h3>그룹전 (selected)</h3>
+        <p class="cv-item"><span class="yr">2025</span><span class="desc">《멜랑콜리아》, 프라이머리 프랙티스, 서울</span></p>
+        <p class="cv-item"><span class="yr">2025</span><span class="desc">《Shadow index》, 파이프 갤러리, 서울</span></p>
+        <p class="cv-item"><span class="yr">2024</span><span class="desc">《경계 흐리기, 경계그리기》, 캔파운데이션 MObyCAN, 서울</span></p>
+        <p class="cv-item"><span class="yr">2023</span><span class="desc">프리즈 필름 《It was the way of walking through narrative》, 보안여관1942, 서울</span></p>
+        <p class="cv-item"><span class="yr">2023</span><span class="desc">《내 책상 위의 천사》, 팩토리2, 서울</span></p>
+        <p class="cv-item"><span class="yr">2022</span><span class="desc">《돌고돌고돌고》, 팩토리2, 서울</span></p>
+        <p class="cv-item"><span class="yr">2022</span><span class="desc">《기록하는 기억》, SeMA 벙커, 서울</span></p>
+        <p class="cv-item"><span class="yr">2022</span><span class="desc">《완벽한 최후의 1초 — 교향곡 2번》, 백남준아트센터, 경기도</span></p>
+        <p class="cv-item"><span class="yr">2022</span><span class="desc">《노래하는 고래, 잠수하는 별》, 울산시립미술관, 울산</span></p>
+        <p class="cv-item"><span class="yr">2021</span><span class="desc">《제21회 송은미술대상전》, 송은, 서울</span></p>
+        <p class="cv-item"><span class="yr">2020</span><span class="desc">《당신의 플로어플랜》, thefloorplan.net, 온라인 전시</span></p>
+        <p class="cv-item"><span class="yr">2020</span><span class="desc">《무브 온 아시아_스크린 라이프 관찰기》, 아마도예술공간, 서울</span></p>
+        <p class="cv-item"><span class="yr">2020</span><span class="desc">《모두의 소장품》, 서울시립미술관, 서울</span></p>
+        <p class="cv-item"><span class="yr">2019</span><span class="desc">《예술가의 배움》, 서울교대 SAM미술관, 서울</span></p>
+        <p class="cv-item"><span class="yr">2018</span><span class="desc">《광주비엔날레, 상상된 경계들》, 아시아문화전당, 광주</span></p>
+        <p class="cv-item"><span class="yr">2018</span><span class="desc">《별 헤는 날 : 나와 당신의 이야기》, 국립현대미술관 청주관, 청주</span></p>
+        <p class="cv-item"><span class="yr">2018</span><span class="desc">《웅얼거리고 일렁거리는》, 백남준아트센터, 경기도</span></p>
+        <p class="cv-item"><span class="yr">2018</span><span class="desc">《Exhibition of exhibition of exhibition》, 세실극장, 서울</span></p>
+        <p class="cv-item"><span class="yr">2017</span><span class="desc">《공공의 리듬, 공동의 몸, 공동체 아카이브전》, 일민미술관, 서울</span></p>
+        <p class="cv-item"><span class="yr">2017</span><span class="desc">《제5회 아마도 애뉴얼날레 목하진행중》, 아마도예술공간, 서울</span></p>
+        <p class="cv-item"><span class="yr">2017</span><span class="desc">《서울도시건축비엔날레 성북프로젝트: 성북예술동》, 서울</span></p>
+        <p class="cv-item"><span class="yr">2016</span><span class="desc">《미각의 미감》, 국립현대미술관 서울관, 서울</span></p>
+        <p class="cv-item"><span class="yr">2016</span><span class="desc">《이삿날》, 인사미술공간, 서울</span></p>
+        <p class="cv-item"><span class="yr">2016</span><span class="desc">《국립현대미술관 과천관 30년 특별전 달은, 차고, 이지러진다》, 국립현대미술관, 서울</span></p>
+        <p class="cv-item"><span class="yr">2016</span><span class="desc">《온고지신, 간송 전형필 선생 탄생 110주년 기념전》, DDP 디자인박물관, 서울</span></p>
+        <p class="cv-item"><span class="yr">2016</span><span class="desc">《해, 수은, 당신의 호흡: 찾기 힘든 고정점》, 블루메미술관, 경기도</span></p>
+        <p class="cv-item"><span class="yr">2015</span><span class="desc">《소리 공동체》, 아르코 미술관, 서울</span></p>
+        <p class="cv-item"><span class="yr">2015</span><span class="desc">《아시아 아트 스페이스 네트워크》, 국립아시아문화전당, 광주</span></p>
+        <p class="cv-item"><span class="yr">2015</span><span class="desc">《빛의 대화, 2015 광주미디어아트페스티벌》, 광주</span></p>
+        <p class="cv-item"><span class="yr">2015</span><span class="desc">《사이의 대화》, 일현미술관, 을지병원, 서울</span></p>
+        <p class="cv-item"><span class="yr">2014</span><span class="desc">《팔로우미》, 북서울미술관, 서울</span></p>
+        <p class="cv-item"><span class="yr">2014</span><span class="desc">《투모로우 2014》, DDP 디자인박물관, 서울</span></p>
+        <p class="cv-item"><span class="yr">2014</span><span class="desc">《벽에 귀 있다》, 3H #2, 마일 랩, 서울</span></p>
+        <p class="cv-item"><span class="yr">2014</span><span class="desc">《반사적 바깥》, KT&amp;G 상상마당, 서울</span></p>
+        <p class="cv-item"><span class="yr">2014</span><span class="desc">《AIA》, 난지미술창작스튜디오 난지전시실, 서울</span></p>
+        <p class="cv-item"><span class="yr">2014</span><span class="desc">《Censorship》, 아마도예술공간, 서울</span></p>
+        <p class="cv-item"><span class="yr">2014</span><span class="desc">《Censorship》, 대안공간 루프, 서울</span></p>
+        <p class="cv-item"><span class="yr">2014</span><span class="desc">《미래가 끝났을 때》, 하이트컬렉션, 서울</span></p>
+        <p class="cv-item"><span class="yr">2014</span><span class="desc">《A.I.D, Hal 할 프로젝트》, 스페이스 mass, 서울</span></p>
+        <p class="cv-item"><span class="yr">2013</span><span class="desc">《Better than Universe》, 대구예술발전소, 대구 — 목하진행중, 아마도예술공간, 서울</span></p>
+        <p class="cv-item"><span class="yr">2013</span><span class="desc">《Interspace Dialogue》, 서울시립미술관, 서울</span></p>
+      </div>
+
+      <div class="cv-section">
+        <h3>공공미술프로젝트</h3>
+        <p class="cv-item"><span class="yr">2024</span><span class="desc">에버랜드 포시즌 가든 미디어월, 경기도</span></p>
+        <p class="cv-item"><span class="yr">2023</span><span class="desc">《유령새 탐조》, 코스모40, 인천</span></p>
+        <p class="cv-item"><span class="yr">2019</span><span class="desc">《소리 없는 파도 없는 소리》, 코스모40, 인천</span></p>
+        <p class="cv-item"><span class="yr">2017</span><span class="desc">《신호, 빛, 연결 : SIGNAL LIGHTS. CONNECTED》, 평창문화올림픽 계기 서울로 7017을 활용한 공공 미술 프로젝트, 서울</span></p>
+        <p class="cv-item"><span class="yr">2017</span><span class="desc">《윤슬 사용법 : 인체 연성》, 윤슬: 서울을 비추는 만리동, 서울</span></p>
+        <p class="cv-item"><span class="yr">2015</span><span class="desc">《신기루의 시간》, 프로젝트 스페이스 스테이지 3x3, 서울</span></p>
+      </div>
+
+      <div class="cv-section">
+        <h3>공공조형물</h3>
+        <p class="cv-item"><span class="yr">2021</span><span class="desc">《오늘의 날씨》, 광명 유 플래닛, 경기도</span></p>
+      </div>
+
+      <div class="cv-section">
+        <h3>레지던시</h3>
+        <p class="cv-item"><span class="yr">2024</span><span class="desc">명륜동 작업실, 캔 파운데이션, 서울</span></p>
+        <p class="cv-item"><span class="yr">2023</span><span class="desc">국립현대미술관 고양 레지던시, 국립현대미술관, 경기도</span></p>
+        <p class="cv-item"><span class="yr">2022</span><span class="desc">금천예술공장 레지던시 13기, 서울문화재단, 서울</span></p>
+        <p class="cv-item"><span class="yr">2016</span><span class="desc">국립현대미술관 창동 레지던시(프로젝트팀), 국립현대미술관, 서울</span></p>
+        <p class="cv-item"><span class="yr">2014</span><span class="desc">난지미술창작스튜디오 8기, 서울시립미술관, 서울</span></p>
+      </div>
+
+      <div class="cv-section">
+        <h3>소장</h3>
+        <p class="cv-item"><span class="yr"></span><span class="desc">서울시립미술관</span></p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== WINDOW: CV_ENG ===== -->
+  <div class="win" id="win-cv-eng" style="width:560px; left:240px; top:110px;">
+    <div class="win-head">
+      <div class="traffic"><span class="t-close" data-act="close"></span><span class="t-min"></span><span class="t-max"></span></div>
+      <div class="win-title">CV_ENG</div>
+    </div>
+    <div class="win-body">
+      <div class="doc-eyebrow">CURRICULUM VITAE</div>
+      <h1 class="doc-title">Daum Kim</h1>
+      <p class="doc-sub">Seoul, KR</p>
+
+      <div class="cv-section">
+        <h3>Education</h3>
+        <p class="cv-item"><span class="yr">2009</span><span class="desc">BFA Sculpture, Kookmin University, Seoul, Korea</span></p>
+      </div>
+
+      <div class="cv-section">
+        <h3>Solo Exhibition</h3>
+        <p class="cv-item"><span class="yr">2023</span><span class="desc">dazzled &amp; muddled, Primary Practice, Seoul</span></p>
+        <p class="cv-item"><span class="yr">2019</span><span class="desc">Blind Road, Factory2, Seoul, Korea</span></p>
+        <p class="cv-item"><span class="yr">2015</span><span class="desc">By the Bamboo Forest, Space Willing and Dealing, Seoul, Korea</span></p>
+        <p class="cv-item"><span class="yr">2014</span><span class="desc">RSVP, Art Sonje Center, lounge project, Seoul, Korea</span></p>
+      </div>
+
+      <div class="cv-section">
+        <h3>Group Exhibition (selected)</h3>
+        <p class="cv-item"><span class="yr">2025</span><span class="desc">Melancholia, Primary Practice, Seoul</span></p>
+        <p class="cv-item"><span class="yr">2025</span><span class="desc">Shadow index, PIPE gallery, Seoul</span></p>
+        <p class="cv-item"><span class="yr">2024</span><span class="desc">Between the lines, Can Foundation MObyCan, Seoul, Korea</span></p>
+        <p class="cv-item"><span class="yr">2023</span><span class="desc">It was the way of walking through narrative, Frieze Film 2023, BOAN1942 ARTSPACE BOAN, Korea</span></p>
+        <p class="cv-item"><span class="yr">2023</span><span class="desc">An angel at my table, Factory2, Seoul, Korea</span></p>
+        <p class="cv-item"><span class="yr">2022</span><span class="desc">Turn, turn, turn, Factory2, Seoul, Korea</span></p>
+        <p class="cv-item"><span class="yr">2022</span><span class="desc">Archived Memories, SeMA Bunker, Seoul, Korea</span></p>
+        <p class="cv-item"><span class="yr">2022</span><span class="desc">The Last Consummate Second — Symphony No. 2, Nam June Paik Art Center, Gyeonggi-do, Korea</span></p>
+        <p class="cv-item"><span class="yr">2022</span><span class="desc">Singing Whales, Diving Stars, Ulsan Art Museum, Ulsan, Korea</span></p>
+        <p class="cv-item"><span class="yr">2021</span><span class="desc">21th SONGEUN Art Award, Songeun art space, Seoul, Korea</span></p>
+        <p class="cv-item"><span class="yr">2020</span><span class="desc">Your Floorplan, thefloorplan.net, on-line exhibition</span></p>
+        <p class="cv-item"><span class="yr">2020</span><span class="desc">Move on Asia: observing Screen Life, Amado Art Space, Seoul, Korea</span></p>
+        <p class="cv-item"><span class="yr">2020</span><span class="desc">SeMA Collection Exhibition: Collecting for All, SeMA, Seoul, Korea</span></p>
+        <p class="cv-item"><span class="yr">2019</span><span class="desc">Artist's learning, SAM Museum, Seoul National University of Education, Seoul, Korea</span></p>
+        <p class="cv-item"><span class="yr">2018</span><span class="desc">Gwangju Biennale, Imagined Borders, Gwangju, Korea</span></p>
+        <p class="cv-item"><span class="yr">2018</span><span class="desc">A Day for Counting Stars: The story of you &amp; me, MMCA Cheongju, Korea</span></p>
+        <p class="cv-item"><span class="yr">2018</span><span class="desc">Common Front, Affectively, Nam June Paik Art Center, Gyeonggido, Korea</span></p>
+        <p class="cv-item"><span class="yr">2018</span><span class="desc">Exhibition of exhibition of exhibition, Cecil Theater, Seoul, Korea</span></p>
+        <p class="cv-item"><span class="yr">2017</span><span class="desc">«Urban Ritornello» The Archives on Community, Ilmin Museum of Art, Seoul, Korea</span></p>
+        <p class="cv-item"><span class="yr">2017</span><span class="desc">The 5th Amado Annualnale, Amado Art Space, Seoul, Korea</span></p>
+        <p class="cv-item"><span class="yr">2016</span><span class="desc">Activating the City: Urban Gastronomy, MMCA, Seoul, Korea</span></p>
+        <p class="cv-item"><span class="yr">2016</span><span class="desc">The Moving Day, Insa Art Space, Seoul, Korea</span></p>
+        <p class="cv-item"><span class="yr">2016</span><span class="desc">MMCA Gwacheon, 30 Years 1986–2016 &lt;As the Moon Waxes and Wanes&gt;, MMCA, Gwacheon, Korea</span></p>
+        <p class="cv-item"><span class="yr">2016</span><span class="desc">Old&amp;New, Kansong Art and Culture Foundation, DDP, Seoul, Korea</span></p>
+        <p class="cv-item"><span class="yr">2016</span><span class="desc">The Temperature of a Handspan – The Aesthetics of Measuring Relations, Blume Museum, Gyeonggi-do, Korea</span></p>
+        <p class="cv-item"><span class="yr">2015</span><span class="desc">Sound of Community, Arko Art Center, Seoul, Korea</span></p>
+        <p class="cv-item"><span class="yr">2015</span><span class="desc">Asia Arts Space Network, Asia Culture Center, Gwangju, Korea</span></p>
+        <p class="cv-item"><span class="yr">2015</span><span class="desc">Dialogue of Light, Gwangju Media Art Festival 2015, Gwangju, Korea</span></p>
+        <p class="cv-item"><span class="yr">2015</span><span class="desc">Dialogues Between, Ilhyun Museum, Eulji hospital, Seoul, Korea</span></p>
+        <p class="cv-item"><span class="yr">2014</span><span class="desc">Follow Me, Buk Seoul Museum, Seoul, Korea</span></p>
+        <p class="cv-item"><span class="yr">2014</span><span class="desc">Reflexive Outside, Dabang Dabang project, KT&amp;G SangsangMadang, Seoul, Korea</span></p>
+        <p class="cv-item"><span class="yr">2014</span><span class="desc">AIA, SeMA NANJI Exhibition Hall, Seoul, Korea</span></p>
+        <p class="cv-item"><span class="yr">2014</span><span class="desc">Censorship, Move On Asia, Alternative Space Loop, Seoul, Korea</span></p>
+        <p class="cv-item"><span class="yr">2014</span><span class="desc">When the Future Ended, Hite Collection, Seoul, Korea</span></p>
+        <p class="cv-item"><span class="yr">2013</span><span class="desc">Better than Universe, Daegu Art Factory, Daegu, Korea</span></p>
+        <p class="cv-item"><span class="yr">2013</span><span class="desc">Progress Under the Eyes, Amado Art Space, Seoul, Korea</span></p>
+        <p class="cv-item"><span class="yr">2013</span><span class="desc">Interspace Dialogue, Seoul Museum of Art, Seoul, Korea</span></p>
+      </div>
+
+      <div class="cv-section">
+        <h3>Public Art Projects</h3>
+        <p class="cv-item"><span class="yr">2024</span><span class="desc">Everland Four Season Garden Media Wall, Gyeonggi-do, Korea</span></p>
+        <p class="cv-item"><span class="yr">2023</span><span class="desc">Ghostbird, Cosmo40, Gyeonggi-do, Korea</span></p>
+        <p class="cv-item"><span class="yr">2017</span><span class="desc">Signal Lights Connected, Public Project for the Olympic Winter Games Pyeong Chang on the Seoullo 7017, Seoul, Korea</span></p>
+        <p class="cv-item"><span class="yr">2017</span><span class="desc">How to Use Yoonseoul: Human Alchemy, Yoonseul: Manridong Reflecting Seoul, Seoul, Korea</span></p>
+        <p class="cv-item"><span class="yr">2015</span><span class="desc">Mirage Time, Project Space Stage 3x3, Seoul, Korea</span></p>
+      </div>
+
+      <div class="cv-section">
+        <h3>Public Sculpture</h3>
+        <p class="cv-item"><span class="yr">2021</span><span class="desc">Today's Weather, U Planet Gwangmyeong, Gyeonggi-do, Korea</span></p>
+      </div>
+
+      <div class="cv-section">
+        <h3>Residency</h3>
+        <p class="cv-item"><span class="yr">2024</span><span class="desc">CAN Foundation Residency, Seoul, Korea</span></p>
+        <p class="cv-item"><span class="yr">2023</span><span class="desc">MMCA Goyang Residency, Gyeonggi-do, Korea</span></p>
+        <p class="cv-item"><span class="yr">2022</span><span class="desc">Seoul Art Space Geumcheon Residency, Seoul, Korea</span></p>
+        <p class="cv-item"><span class="yr">2014</span><span class="desc">SeMA Nanji Residency, Seoul, Korea</span></p>
+      </div>
+
+      <div class="cv-section">
+        <h3>Collection</h3>
+        <p class="cv-item"><span class="yr"></span><span class="desc">SeMA (Seoul Museum of Art)</span></p>
+      </div>
     </div>
   </div>
 
@@ -646,7 +840,7 @@ body{
   document.querySelectorAll('.icon').forEach(function(ic){
     ic.addEventListener('click', function(){ focusStaticWin(ic.dataset.win); });
   });
-  document.querySelectorAll('#win-about, #win-work, #win-cv, #win-contact, #win-photos').forEach(function(w){
+  document.querySelectorAll('#win-about, #win-work, #win-cv-kor, #win-cv-eng, #win-contact, #win-photos').forEach(function(w){
     makeDraggable(w);
     w.addEventListener('mousedown', function(){ bringToFront(w); });
     var closeBtn = w.querySelector('[data-act="close"]');
@@ -669,7 +863,6 @@ body{
   // dock: CV, Contact, Vimeo, Instagram
   var dock = document.getElementById('dock');
   var dockItems = [
-    {id:'cv', label:'CV', img:'assets/Notes_icon.svg', type:'win'},
     {id:'contact', label:'Contact', img:'assets/Mail_icon.svg', type:'win'},
     {id:'photos', label:'Photos', img:'assets/Photos_icon.svg', type:'win'},
     {id:'vimeo', label:'Vimeo', img:'assets/vimeo_tile.svg', type:'link', href:'https://vimeo.com/kimdaum'},
