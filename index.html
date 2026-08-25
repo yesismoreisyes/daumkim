@@ -818,17 +818,16 @@ body{
   ];
   var openPhotoWindows = {};
 
-  function openPhotoWindow(index, src){
+  function openPhotoWindow(index, src, left, top){
     if(openPhotoWindows[index]){
       bringToFront(openPhotoWindows[index]);
       return;
     }
     var w = document.createElement('div');
     w.className = 'win open photo-win';
-    var offset = Object.keys(openPhotoWindows).length * 30;
     w.style.width = '260px';
-    w.style.left = (60 + offset) + 'px';
-    w.style.top = (60 + offset) + 'px';
+    w.style.left = left + 'px';
+    w.style.top = top + 'px';
 
     w.innerHTML =
       '<div class="win-head">' +
@@ -852,8 +851,22 @@ body{
   }
 
   function openAllProfilePhotos(){
+    var winWidth = 260;
+    var gap = 24;
+    var marginX = 40;
+    var topStart = 70;
+    var availWidth = window.innerWidth - marginX * 2;
+    var perRow = Math.max(1, Math.floor((availWidth + gap) / (winWidth + gap)));
+    var rowWidth = perRow * winWidth + (perRow - 1) * gap;
+    var startX = marginX + Math.max(0, (availWidth - rowWidth) / 2);
+    var rowHeight = 340;
+
     profilePhotos.forEach(function(src, i){
-      openPhotoWindow(i, src);
+      var col = i % perRow;
+      var row = Math.floor(i / perRow);
+      var left = startX + col * (winWidth + gap);
+      var top = topStart + row * rowHeight;
+      openPhotoWindow(i, src, left, top);
     });
   }
 
