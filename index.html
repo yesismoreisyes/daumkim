@@ -355,6 +355,7 @@ body{
   width:100%;
   height:auto;
   display:block;
+  cursor:pointer;
   border-radius:3px;
 }
 
@@ -464,6 +465,10 @@ body{
   </div>
 
   <div id="icons">
+    <div class="icon" data-win="portfolio">
+      <div class="icon-glyph img-icon"><img src="assets/folder_icon.svg" alt=""></div>
+      <div class="icon-label">Portfolio</div>
+    </div>
     <div class="icon" data-win="work">
       <div class="icon-glyph img-icon"><img src="assets/folder_icon.svg" alt=""></div>
       <div class="icon-label">Work</div>
@@ -489,6 +494,17 @@ body{
         <span class="k">위치</span>
         <span class="v">서울 마포구 (망원동)</span>
       </div>
+    </div>
+  </div>
+
+  <!-- ===== WINDOW: PORTFOLIO ===== -->
+  <div class="win" id="win-portfolio" style="width:460px; left:500px; top:80px;">
+    <div class="win-head">
+      <div class="traffic"><span class="t-close" data-act="close"></span><span class="t-min"></span><span class="t-max"></span></div>
+      <div class="win-title">Portfolio</div>
+    </div>
+    <div class="win-body">
+      <div class="empty-folder">빈 폴더 — 포트폴리오 내용을 알려주시면 채워 넣을게요</div>
     </div>
   </div>
 
@@ -757,6 +773,11 @@ body{
   };
 
   var yearGrid = document.getElementById('year-grid');
+  var pubItem = document.createElement('div');
+  pubItem.className = 'finder-item';
+  pubItem.dataset.year = 'publication';
+  pubItem.innerHTML = '<div class="icon-glyph img-icon"><img src="assets/folder_icon.svg" alt=""></div><div class="icon-label">Publication</div>';
+  yearGrid.appendChild(pubItem);
   years.forEach(function(y){
     var it = document.createElement('div');
     it.className = 'finder-item';
@@ -841,11 +862,13 @@ body{
     document.getElementById('desktop').appendChild(w);
     bringToFront(w);
     makeDraggable(w);
-    w.querySelector('.t-close').addEventListener('click', function(e){
-      e.stopPropagation();
+    function closeThisPhoto(e){
+      if(e) e.stopPropagation();
       w.remove();
       delete openPhotoWindows[index];
-    });
+    }
+    w.querySelector('.t-close').addEventListener('click', closeThisPhoto);
+    w.querySelector('.photo-win-body img').addEventListener('click', closeThisPhoto);
     w.addEventListener('mousedown', function(){ bringToFront(w); });
     openPhotoWindows[index] = w;
   }
@@ -920,7 +943,9 @@ body{
     }
 
     if(entries.length === 0 && images.length === 0){
-      bodyHtml = '<div class="empty-folder">빈 폴더 — 이 해의 작업을 알려주시면 채워 넣을게요</div>';
+      bodyHtml = (year === 'publication')
+        ? '<div class="empty-folder">빈 폴더 — 출판물 정보를 알려주시면 채워 넣을게요</div>'
+        : '<div class="empty-folder">빈 폴더 — 이 해의 작업을 알려주시면 채워 넣을게요</div>';
     } else {
       entries.forEach(function(e){
         bodyHtml += '<div class="work-entry">' +
@@ -935,7 +960,7 @@ body{
     w.innerHTML =
       '<div class="win-head">' +
         '<div class="traffic"><span class="t-close"></span><span class="t-min"></span><span class="t-max"></span></div>' +
-        '<div class="win-title">Work / '+year+'</div>' +
+        '<div class="win-title">Work / '+(year === 'publication' ? 'Publication' : year)+'</div>' +
       '</div>' +
       '<div class="win-body">'+bodyHtml+'</div>';
 
@@ -971,7 +996,7 @@ body{
     focusStaticWin('cv-kor');
     focusStaticWin('cv-eng');
   });
-  document.querySelectorAll('#win-about, #win-work, #win-cv-kor, #win-cv-eng, #win-contact').forEach(function(w){
+  document.querySelectorAll('#win-about, #win-portfolio, #win-work, #win-cv-kor, #win-cv-eng, #win-contact').forEach(function(w){
     makeDraggable(w);
     w.addEventListener('mousedown', function(){ bringToFront(w); });
     var closeBtn = w.querySelector('[data-act="close"]');
