@@ -888,7 +888,7 @@ body{
     {name:'Routes Guided by Constructed Interfaces — Kim Sung Woo', src:'assets/Routes Guided by Constructed Interfaces_KIM sung woo.pdf'}
   ];
 
-  function renderPdfGrid(gridId, files){
+  function renderPdfGrid(gridId, files, winId){
     var grid = document.getElementById(gridId);
     if(!grid) return;
     files.forEach(function(f, i){
@@ -898,9 +898,14 @@ body{
       it.innerHTML = '<div class="icon-glyph glyph-pdf">PDF</div><div class="icon-label">'+f.name+'</div>';
       grid.appendChild(it);
     });
-    grid.addEventListener('click', function(e){
+    var body = grid.closest('.win-body') || grid;
+    body.addEventListener('click', function(e){
       var item = e.target.closest('.finder-item');
-      if(!item) return;
+      if(!item){
+        // clicked the empty gray area of the folder, not a file — close it
+        if(winId) closeStaticWin(winId);
+        return;
+      }
       var index = parseInt(item.dataset.index, 10);
       if(isMobileView()){
         // Embedding PDFs in an iframe is unreliable on phone browsers
@@ -917,8 +922,8 @@ body{
   function isMobileView(){
     return window.matchMedia('(max-width:720px)').matches;
   }
-  renderPdfGrid('portfolio-grid', portfolioFiles);
-  renderPdfGrid('publication-grid', publicationFiles);
+  renderPdfGrid('portfolio-grid', portfolioFiles, 'portfolio');
+  renderPdfGrid('publication-grid', publicationFiles, 'publication');
 
   var openPdfWindows = {};
   function openPdfViewer(files, index){
@@ -1257,9 +1262,12 @@ body{
     }
   });
 
-  yearGrid.addEventListener('click', function(e){
+  (yearGrid.closest('.win-body') || yearGrid).addEventListener('click', function(e){
     var item = e.target.closest('.finder-item');
-    if(!item) return;
+    if(!item){
+      closeStaticWin('work');
+      return;
+    }
     openYearWindow(item.dataset.year);
   });
 
@@ -1270,7 +1278,7 @@ body{
     {id:'photos', label:'Photo', img:'assets/Photos_icon.svg', type:'win'},
     {id:'vimeo', label:'Vimeo', img:'assets/vimeo_tile.svg', type:'link', href:'https://vimeo.com/kimdaum'},
     {id:'youtube', label:'YouTube', img:'assets/YouTube_icon.svg', type:'link', href:'https://youtube.com/playlist?list=PLE1L0if9eNqUVRjbtvGEI3P8DmlvXndXz&si=ghiyJwQUXVliniQD'},
-    {id:'instagram', label:'Instagram', img:'assets/Instagram_icon.svg', type:'link', href:'https://www.instagram.com/daum-kim'}
+    {id:'instagram', label:'Instagram', img:'assets/Instagram_icon.svg', type:'link', href:'https://www.instagram.com/daum_kim'}
   ];
   dockItems.forEach(function(d){
     var wrap = document.createElement('div');
