@@ -154,6 +154,15 @@ body{
   overflow:hidden;
   z-index:100;
 }
+.rz{position:absolute; z-index:30;}
+.rz-e{top:0; right:0; width:6px; height:100%; cursor:ew-resize;}
+.rz-w{top:0; left:0; width:6px; height:100%; cursor:ew-resize;}
+.rz-s{left:0; bottom:0; height:6px; width:100%; cursor:ns-resize;}
+.rz-n{left:0; top:0; height:6px; width:100%; cursor:ns-resize;}
+.rz-se{right:0; bottom:0; width:14px; height:14px; cursor:nwse-resize;}
+.rz-sw{left:0; bottom:0; width:14px; height:14px; cursor:nesw-resize;}
+.rz-ne{right:0; top:0; width:14px; height:14px; cursor:nesw-resize;}
+.rz-nw{left:0; top:0; width:14px; height:14px; cursor:nwse-resize;}
 .win.open{display:flex;}
 .win-head{
   height:34px;
@@ -904,6 +913,7 @@ body{
     document.getElementById('desktop').appendChild(w);
     bringToFront(w);
     makeDraggable(w);
+    makeResizable(w);
     w.querySelector('.t-close').addEventListener('click', function(e){
       e.stopPropagation();
       w.remove();
@@ -919,10 +929,26 @@ body{
     openPdfWindows[groupKey] = w;
     setPdfActive(w, files, index);
   }
+  function resolvePdfSrc(src){
+    // Files with Korean characters can be saved on GitHub in either
+    // precomposed (NFC) or decomposed (NFD, common on macOS) Unicode form.
+    // Probe both so the right one is used whichever way it was uploaded.
+    var nfc = encodeURI(src.normalize ? src.normalize('NFC') : src);
+    var nfd = encodeURI(src.normalize ? src.normalize('NFD') : src);
+    if(nfc === nfd || !window.fetch){
+      return Promise.resolve(nfc);
+    }
+    return fetch(nfc, {method:'HEAD'}).then(function(r){
+      return r.ok ? nfc : nfd;
+    }).catch(function(){ return nfd; });
+  }
   function setPdfActive(w, files, index){
     var f = files[index];
     w.querySelector('.win-title').textContent = f.name;
-    w.querySelector('.pdf-view-pane iframe').src = encodeURI(f.src) + '#toolbar=1&navpanes=0&view=FitH';
+    var iframe = w.querySelector('.pdf-view-pane iframe');
+    resolvePdfSrc(f.src).then(function(resolvedSrc){
+      iframe.src = resolvedSrc + '#toolbar=1&navpanes=0&view=FitH';
+    });
     w.querySelectorAll('.pdf-sidebar-item').forEach(function(el){
       el.classList.toggle('active', parseInt(el.dataset.index, 10) === index);
     });
@@ -972,6 +998,43 @@ body{
     window.addEventListener('touchend', end);
   }
 
+  function makeResizable(w){
+    var dirs = ['n','s','e','w','ne','nw','se','sw'];
+    dirs.forEach(function(dir){
+      var h = document.createElement('div');
+      h.className = 'rz rz-' + dir;
+      w.appendChild(h);
+      h.addEventListener('mousedown', function(e){
+        e.stopPropagation();
+        e.preventDefault();
+        bringToFront(w);
+        var startX = e.clientX, startY = e.clientY;
+        var startW = w.offsetWidth, startH = w.offsetHeight;
+        var startLeft = w.offsetLeft, startTop = w.offsetTop;
+        w.style.maxWidth = 'none';
+        w.style.maxHeight = 'none';
+        function onMove(ev){
+          var dx = ev.clientX - startX, dy = ev.clientY - startY;
+          var newW = startW, newH = startH, newLeft = startLeft, newTop = startTop;
+          if(dir.indexOf('e') !== -1) newW = Math.max(300, startW + dx);
+          if(dir.indexOf('s') !== -1) newH = Math.max(160, startH + dy);
+          if(dir.indexOf('w') !== -1){ newW = Math.max(300, startW - dx); newLeft = startLeft + (startW - newW); }
+          if(dir.indexOf('n') !== -1){ newH = Math.max(160, startH - dy); newTop = startTop + (startH - newH); }
+          w.style.width = newW + 'px';
+          w.style.height = newH + 'px';
+          w.style.left = newLeft + 'px';
+          w.style.top = newTop + 'px';
+        }
+        function onUp(){
+          document.removeEventListener('mousemove', onMove);
+          document.removeEventListener('mouseup', onUp);
+        }
+        document.addEventListener('mousemove', onMove);
+        document.addEventListener('mouseup', onUp);
+      });
+    });
+  }
+
   var profilePhotos = [
     'assets/Profile_Photo_1.jpg',
     'assets/Profile_Photo_2.jpg',
@@ -1004,6 +1067,7 @@ body{
     document.getElementById('desktop').appendChild(w);
     bringToFront(w);
     makeDraggable(w);
+    makeResizable(w);
     function closeThisPhoto(e){
       if(e) e.stopPropagation();
       w.remove();
@@ -1107,6 +1171,7 @@ body{
     document.getElementById('desktop').appendChild(w);
     bringToFront(w);
     makeDraggable(w);
+    makeResizable(w);
     w.querySelector('.t-close').addEventListener('click', function(e){
       e.stopPropagation();
       w.remove();
@@ -1138,6 +1203,7 @@ body{
   });
   document.querySelectorAll('#win-about, #win-portfolio, #win-publication, #win-work, #win-cv-kor, #win-cv-eng, #win-contact').forEach(function(w){
     makeDraggable(w);
+    makeResizable(w);
     w.addEventListener('mousedown', function(){ bringToFront(w); });
     var closeBtn = w.querySelector('[data-act="close"]');
     if(closeBtn){
