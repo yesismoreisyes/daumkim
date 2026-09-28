@@ -492,12 +492,44 @@ body{
   #icons{grid-template-columns:repeat(2,72px); right:16px; gap:14px 10px;}
   .icon{width:72px;}
   .win{
-    left:4vw !important; right:4vw !important; top:calc(var(--menubar-h) + 10px) !important;
+    left:4vw !important; right:4vw !important; top:calc(var(--menubar-h) + 8px) !important;
     width:92vw !important; max-height:78vh;
   }
   .win-body{padding:20px 18px 26px;}
   .doc-title{font-size:20px;}
   .win.stamped .win-body::after{right:-38px; font-size:10px;}
+
+  /* PDFs need the space: fill almost the whole screen height on a phone. */
+  .win.pdf-win{
+    height:calc(100vh - var(--menubar-h) - 96px) !important;
+    max-height:calc(100vh - var(--menubar-h) - 96px) !important;
+  }
+
+  /* PDF viewer: stack the file list above the page instead of beside it,
+     so the page itself gets the full screen width on a phone. */
+  .pdf-win-body{flex-direction:column;}
+  .pdf-sidebar{
+    width:auto; flex:0 0 auto;
+    max-height:88px;
+    border-right:none;
+    border-bottom:1px solid var(--hairline);
+    display:flex; flex-direction:row; align-items:stretch;
+    overflow-x:auto; overflow-y:hidden;
+    padding:8px 6px;
+  }
+  .pdf-sidebar-item{
+    flex:0 0 auto;
+    white-space:nowrap;
+    max-width:180px;
+    overflow:hidden; text-overflow:ellipsis;
+    border-left:none;
+    border-bottom:2px solid transparent;
+  }
+  .pdf-sidebar-item.active{border-left-color:transparent; border-bottom-color:var(--gold);}
+  .pdf-view-pane{flex:1 1 auto; min-height:0;}
+
+  /* Edge-drag resizing doesn't make sense with touch scrolling on phones. */
+  .rz{display:none;}
 }
 </style>
 </head>
@@ -884,7 +916,7 @@ body{
       return;
     }
     var w = document.createElement('div');
-    w.className = 'win open';
+    w.className = 'win open pdf-win';
     w.style.width = '92vw';
     w.style.maxWidth = '1400px';
     w.style.height = '88vh';
