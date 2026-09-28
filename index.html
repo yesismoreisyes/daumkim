@@ -880,10 +880,12 @@ body{
     }
     var w = document.createElement('div');
     w.className = 'win open';
-    w.style.width = '760px';
-    w.style.height = '78vh';
-    w.style.left = '260px';
-    w.style.top = '54px';
+    w.style.width = '92vw';
+    w.style.maxWidth = '1400px';
+    w.style.height = '88vh';
+    w.style.maxHeight = '88vh';
+    w.style.left = '4vw';
+    w.style.top = 'calc(var(--menubar-h) + 16px)';
 
     var sidebarHtml = files.map(function(f, i){
       return '<div class="pdf-sidebar-item" data-index="'+i+'"><span class="dot">▤</span><span>'+f.name+'</span></div>';
@@ -920,7 +922,7 @@ body{
   function setPdfActive(w, files, index){
     var f = files[index];
     w.querySelector('.win-title').textContent = f.name;
-    w.querySelector('.pdf-view-pane iframe').src = encodeURI(f.src);
+    w.querySelector('.pdf-view-pane iframe').src = encodeURI(f.src) + '#toolbar=1&navpanes=0&view=FitH';
     w.querySelectorAll('.pdf-sidebar-item').forEach(function(el){
       el.classList.toggle('active', parseInt(el.dataset.index, 10) === index);
     });
