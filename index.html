@@ -901,8 +901,21 @@ body{
     grid.addEventListener('click', function(e){
       var item = e.target.closest('.finder-item');
       if(!item) return;
-      openPdfViewer(files, parseInt(item.dataset.index, 10));
+      var index = parseInt(item.dataset.index, 10);
+      if(isMobileView()){
+        // Embedding PDFs in an iframe is unreliable on phone browsers
+        // (scrolling / paging often just doesn't work). On mobile, hand
+        // the file straight to the OS/browser's own PDF viewer instead.
+        resolvePdfSrc(files[index].src).then(function(resolvedSrc){
+          window.open(resolvedSrc, '_blank');
+        });
+        return;
+      }
+      openPdfViewer(files, index);
     });
+  }
+  function isMobileView(){
+    return window.matchMedia('(max-width:720px)').matches;
   }
   renderPdfGrid('portfolio-grid', portfolioFiles);
   renderPdfGrid('publication-grid', publicationFiles);
