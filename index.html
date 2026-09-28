@@ -1291,7 +1291,12 @@ body{
       el.target = '_blank';
       el.rel = 'noopener';
     } else if(d.id === 'photos'){
-      el.addEventListener('click', function(){ openAllProfilePhotos(); });
+      el.addEventListener('click', function(){
+        var idx = profilePhotos.length - 1;
+        var left = Math.max(20, (window.innerWidth - 260) / 2);
+        var top = 70;
+        openPhotoWindow(idx, profilePhotos[idx], left, top);
+      });
     } else {
       el.addEventListener('click', function(){ focusStaticWin(d.id); });
     }
