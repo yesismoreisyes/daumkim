@@ -35,12 +35,26 @@ body{
 #desktop{
   position:fixed;
   inset:0;
+  background:var(--charcoal);
+  overflow:hidden;
+}
+.bg-layer{
+  position:absolute; inset:0;
+  background-position:center center;
+  background-size:cover;
+  background-repeat:no-repeat;
+  z-index:-2;
+  opacity:0;
+  transition:opacity 1s ease-in-out;
+}
+.bg-layer.bg-visible{opacity:1;}
+.bg-tint{
+  position:absolute; inset:0;
+  z-index:-1;
   background:
     linear-gradient(180deg, rgba(10,11,14,0.32) 0%, rgba(10,11,14,0.52) 100%),
-    radial-gradient(ellipse at 20% -10%, rgba(36,38,44,0.4) 0%, transparent 55%),
-    url('assets/desktop_image.jpg') center center / cover no-repeat,
-    var(--charcoal);
-  overflow:hidden;
+    radial-gradient(ellipse at 20% -10%, rgba(36,38,44,0.4) 0%, transparent 55%);
+  pointer-events:none;
 }
 #desktop::after{
   content:"";
@@ -536,6 +550,10 @@ body{
 <body>
 
 <div id="desktop">
+
+  <div class="bg-layer" id="bg-layer-a"></div>
+  <div class="bg-layer" id="bg-layer-b"></div>
+  <div class="bg-tint"></div>
 
   <div id="menubar">
     <div class="left">
@@ -1320,6 +1338,67 @@ body{
   }
   tick();
   setInterval(tick, 1000 * 15);
+
+  /* ---------- DESKTOP BACKGROUND SLIDESHOW ---------- */
+  // 14 photos, each swapped in with a 1s dissolve. Only the CURRENT and
+  // the NEXT image are ever loaded — the rest are fetched one at a time,
+  // right before they're needed — so the page still opens as fast as
+  // when there was just one background photo, instead of pulling all
+  // ~20MB of photos up front.
+  var desktopImages = [
+    'assets/BG01.jpg',
+    'assets/BG02.jpg',
+    'assets/BG03.jpg',
+    'assets/BG04.jpg',
+    'assets/BG05.jpg',
+    'assets/BG06.jpg',
+    'assets/BG07.jpg',
+    'assets/BG08.jpg',
+    'assets/BG09.jpg',
+    'assets/BG10.jpg',
+    'assets/BG11.jpg',
+    'assets/BG12.jpg',
+    'assets/BG13.jpg',
+    'assets/BG14.jpg'
+  ];
+  var BG_DISPLAY_MS = 8000; // how long each photo stays on screen
+  var bgLayerA = document.getElementById('bg-layer-a');
+  var bgLayerB = document.getElementById('bg-layer-b');
+  var bgFront = bgLayerA;
+  var bgBack = bgLayerB;
+  var bgIndex = 0;
+
+  function preloadImage(src){
+    return new Promise(function(resolve){
+      var img = new Image();
+      img.onload = function(){ resolve(); };
+      img.onerror = function(){ resolve(); }; // don't block the slideshow on a missing file
+      img.src = src;
+    });
+  }
+
+  function startBgSlideshow(){
+    if(!desktopImages.length) return;
+    preloadImage(desktopImages[0]).then(function(){
+      bgFront.style.backgroundImage = 'url("' + encodeURI(desktopImages[0]) + '")';
+      bgFront.classList.add('bg-visible');
+      if(desktopImages.length > 1) setTimeout(advanceBg, BG_DISPLAY_MS);
+    });
+  }
+
+  function advanceBg(){
+    var nextIndex = (bgIndex + 1) % desktopImages.length;
+    preloadImage(desktopImages[nextIndex]).then(function(){
+      bgBack.style.backgroundImage = 'url("' + encodeURI(desktopImages[nextIndex]) + '")';
+      bgBack.classList.add('bg-visible');
+      bgFront.classList.remove('bg-visible');
+      var tmp = bgFront; bgFront = bgBack; bgBack = tmp;
+      bgIndex = nextIndex;
+      setTimeout(advanceBg, BG_DISPLAY_MS);
+    });
+  }
+
+  startBgSlideshow();
 })();
 </script>
 
